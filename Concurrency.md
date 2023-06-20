@@ -106,19 +106,20 @@ You can also implement your own custom update processor by subclassing the `Base
 ```python
 class MyUpdateProcessor(BaseUpdateProcessor):
     async def do_process_update(self, update, coroutine) -> None:
-        # This method is called for every update that should be processed
-        print(update)
+        # This method is called for every update
+        if update.callback_query:
+            await asyncio.sleep(5)
+        await coroutine
 
     async def initialize(self) -> None:
-        # Add your code to allocate resources here
-        print("Initializing...")
+      pass
 
     async def shutdown(self) -> None:
-        # Add your code to free resources here
-        print("Shutting down...")
+      pass
 
 Application.builder().token('TOKEN').concurrent_updates(MyUpdateProcessor(10)).build()
 ```
+The above code processes every callback_query update with a delay of 5 seconds for up to 10 updates simultaneously. This is just an example of how to use the `BaseUpdateProcessor` class, there are endless possibilities to this.
 See the [documentation](https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.baseupdateprocessor.html#telegram.ext.BaseUpdateProcessor) for more information.
 
 This setting is *independent* of the `block` parameter of `Handler` and within `application.process_update` concurrency still works as explained above.
