@@ -101,6 +101,7 @@ while not application.update_queue.empty():
   update = await application.update_queue.get()
   asyncio.create_task(application.process_update(update))
 ```
+This setting is *independent* of the `block` parameter of `Handler` and within `application.process_update` concurrency still works as explained above.
 
 You can also implement your own custom update processor by subclassing the `BaseUpdateProcessor` class:
 ```python
@@ -119,10 +120,8 @@ class MyUpdateProcessor(BaseUpdateProcessor):
 
 Application.builder().token('TOKEN').concurrent_updates(MyUpdateProcessor(10)).build()
 ```
-The above code processes every callback_query update with a delay of 5 seconds for up to 10 updates simultaneously. This is just an example of how to use the `BaseUpdateProcessor` class, there are endless possibilities to this.
+The above code processes every `callback_query` update with a delay of 5 seconds for up to 10 updates simultaneously. This is just an example of how to use the `BaseUpdateProcessor` class, there are endless possibilities to this.
 See the [documentation](https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.baseupdateprocessor.html#telegram.ext.BaseUpdateProcessor) for more information.
-
-This setting is *independent* of the `block` parameter of `Handler` and within `application.process_update` concurrency still works as explained above.
 
 **Note:** The number of concurrently processed updates is limited (the limit defaults to 4096 updates at a time).
 This is a simple measure to avoid e.g. DDOS attacks
