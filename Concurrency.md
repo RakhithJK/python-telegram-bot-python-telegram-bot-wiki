@@ -127,7 +127,7 @@ while not application.update_queue.empty():
   coroutine = application.process_update(update)
   asyncio.create_task(do_process_update(update, coroutine))
 ```
-This is just an example of how to use the `BaseUpdateProcessor` class to handle updates in the way you want, there are endless possibilities to this. See the [documentation](https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.baseupdateprocessor.html#telegram.ext.BaseUpdateProcessor) for more information.
+This is just an example of how to use the `BaseUpdateProcessor` class to handle updates in the way you want, there are endless possibilities to this. See the [documentation](https://docs.python-telegram-bot.org/en/latest/telegram.ext.baseupdateprocessor.html#telegram.ext.BaseUpdateProcessor) for more information.
 
 **Note:** The number of concurrently processed updates is limited (the limit defaults to 4096 updates at a time).
 This is a simple measure to avoid e.g. DDOS attacks
