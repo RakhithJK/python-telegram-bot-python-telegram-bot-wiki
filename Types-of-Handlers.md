@@ -1,4 +1,4 @@
-A `Handler` is an instance derived from the base class [`telegram.ext.BaseHandler`](https://docs.python-telegram-bot.org/en/v20.0a1/telegram.ext.basehandler.html#telegram.ext.BaseHandler) which is responsible for the routing of different kinds of updates (text, audio, inlinequery, button presses, ...) to their _corresponding callback function_ in your code.
+A `Handler` is an instance derived from the base class [`telegram.ext.BaseHandler`](https://docs.python-telegram-bot.org/telegram.ext.basehandler.html#telegram.ext.BaseHandler) which is responsible for the routing of different kinds of updates (text, audio, inlinequery, button presses, ...) to their _corresponding callback function_ in your code.
 
 For example, if you want your bot to respond to the command `/start`, you can use a [`telegram.ext.CommandHandler`](https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.commandhandler.html) that maps this user input to a callback named `start_callback`:
 ```python
@@ -12,7 +12,7 @@ application.add_handler(CommandHandler("start", start_callback))
 
 ## Different types of `Update`s
 
-For different kinds of user input, the received `telegram.Update` will have different attributes set. For example an incoming message will result in `update.message` containing the sent message. The pressing an inline button will result in `update.callback_query` being set. To differentiate between all those updates, `telegram.ext` provides
+For different kinds of user input, the received `telegram.Update` will have different attributes set. For example an incoming message will result in `update.message` containing the sent message. The pressing of an inline button will result in `update.callback_query` being set. To differentiate between all those updates, `telegram.ext` provides
 
 1) [`telegram.ext.MessageHandler`](https://python-telegram-bot.readthedocs.io/telegram.ext.messagehandler.html) for all message updates
 2) [`telegram.ext.CommandHandler`](https://python-telegram-bot.readthedocs.io/telegram.ext.commandhandler.html) for messages with bot commands
@@ -26,7 +26,7 @@ The special thing about `MessageHandler` is that there is such a vast variety of
 * `update.channel_post`
 * `update.edited_channel_post`
 
-You can use the different filters to narrow down which updates your `MessageHandler` will handle. See also [[this article|Extensions-–-Advanced-Filters]] for advanced usage of filters.
+You can use the different filters to narrow down which updates your `MessageHandler` will handle. See also [[this article|Extensions---Advanced-Filters]] for advanced usage of filters.
 
 Because bot commands are another special part of the user interface of bots, there is the dedicated `CommandHandler`, which allows you to easily handle messages like `/start` or `/help`. Of course those messages can also be handled with `MessageHandler`, if needed.
 
@@ -55,7 +55,7 @@ Clicking this link will open your Telegram Client and show a big START button. W
 
 Note that since telegram doesn't support spaces in deep linking parameters, you will have to manually split the single `Hello_World` argument, into `["Hello", "World!"]` (using `context.args[0].split('_')` for example)
 
-You also have to pay attention to the maximum length accepted by Telegram itself. As stated in the [documentation](https://core.telegram.org/bots#deep-linking) the maximum length for the start parameter is `64`.
+You also have to pay attention to the maximum length accepted by Telegram itself. As stated in [Telegram API documentation](https://core.telegram.org/bots/features#deep-linking) (and reflected in [PTB documentation](https://python-telegram-bot.readthedocs.io/en/latest/telegram.constants.html#telegram.constants.MessageLimit.DEEP_LINK_LENGTH)), the maximum length for the `start` parameter is `64`.
 
 Also, since this is an URL parameter, you have to pay attention on how to correctly pass the values in order to avoid passing URL reserved characters. Consider the usage of `base64.urlsafe_b64encode`.
 
@@ -65,7 +65,7 @@ For more complex inputs you can employ the [`telegram.ext.MessageHandler`](https
 
 Keep in mind that for extracting URLs, #Hashtags, @Mentions, and other Telegram entities, there's no need to parse them with a regex filter because the Bot API already sends them to us with every update. Refer to [[this snippet|Code-snippets#message-entities]] to learn how to work with entities instead.
 
-This tutorial only covers some of the available handlers (for now). Refer to [the documentation](https://docs.python-telegram-bot.org/en/latest/telegram.ext.handlers-tree.html) for all other types.
+This tutorial only covers some of the available handlers (for now). Refer to [the documentation](https://docs.python-telegram-bot.org/telegram.ext.handlers-tree.html) for all other types.
 
 ## Custom updates
 

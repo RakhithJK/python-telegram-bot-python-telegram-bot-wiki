@@ -1,9 +1,7 @@
-## ⚠️ Note
+## Introduction
 
-This transition guide is subject to changes as long as v20.0 is in pre-release mode.
-Individual pre-releases for v20.0 will not get standalone transition guides.
-
-Moreover, it's important to note that this transition guide will not cover every last one of the many smaller changes that came along with the bigger structural changes.
+This transition guide aims to easy transitions from v13.x to v20.0 by listing relevant changes between these versions.
+It's important to note that this transition guide will not cover every last one of the many smaller changes that came along with the bigger structural changes.
 If you notice that some non trivial change is missing in here, feel free to add it.
 
 ## Table of contents
@@ -130,7 +128,7 @@ The main points of what `asyncio` changed in PTB are:
 * All handler & job callbacks must be coroutine functions, i.e. you need to change `def callback(update, context)` to `async def callback(update, context)`.
 * the `run_async` parameter of the handlers was replaced by the `block` parameter, which has a similar functionality. More details on this can be found on [[this page|Concurrency]].
 * The method `Dispatcher.run_async` doesn't exist anymore. Something that comes close to its functionality is `Application.create_task` (more on `Application` below). More details on this can be found on [[this page|Concurrency]].
-* All methods that make calls coroutines or perform any I/O bound tasks are now coroutine functions.
+* All methods that make calls to coroutines or perform any I/O bound tasks are now coroutine functions.
 This includes all abstract methods of `BasePersistence`. Listing them all here would be too long. When in doubt, please consult the documentation at [ReadTheDocs](https://python-telegram-bot.readthedocs.io).
 
 ## Optional Dependencies

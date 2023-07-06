@@ -140,7 +140,7 @@ In addition to that, PTB offers `Application.create_task` to run specific corout
 Please consult the documentation of [`Application.create_task`](https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.application.html#telegram.ext.Application.create_task) for more details.
 
 This wrapper gives you fine-grained control about how you use concurrency in PTB.
-The next section gives you in idea about why that is helpful.
+The next section gives you an idea about why that is helpful.
 
 ## Tailor-made Concurrency
 

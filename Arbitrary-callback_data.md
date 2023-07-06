@@ -2,16 +2,16 @@
 
 The Telegrams Bot API only accepts strings with length up to 64 bytes as `callback_data` for `InlineKeyboardButtons`, which sometimes is quite a limitation.
 
-With PTB, you are able to pass *any* object as `callback_data`. This is achieved by storing the object in a cache and passing a unique identifier for that object to Telegram. When a `CallbackQuery` is received, the id in the `callback_data` is replaced with the stored object. To use this feature, set the parameter `arbitrary_callback_data` for your `Updater` or `ext.Bot` instance to `True`. The cache that holds the stored data has limited size (more details on memory usage below). If the cache is full and objects from a new `lnlineKeyboardMarkup` need to be stored, it will discard the data for the least recently used keyboard.
+With PTB, you are able to pass *any* object as `callback_data`. This is achieved by storing the object in a cache and passing a unique identifier for that object to Telegram. When a `CallbackQuery` is received, the id in the `callback_data` is replaced with the stored object. To use this feature, set [`Application.arbitrary_callback_data`](https://docs.python-telegram-bot.org/telegram.ext.applicationbuilder.html#telegram.ext.ApplicationBuilder.arbitrary_callback_data) to `True`. The cache that holds the stored data has limited size (more details on memory usage below). If the cache is full and objects from a new `InlineKeyboardMarkup` need to be stored, it will discard the data for the least recently used keyboard.
 
 This means two things for you:
 
-1. If you don't use [persistence](../Making-your-bot-persistent), buttons won't work after restarting your bot, as the stored updates are lost. More precisely, the `callback_data` you will receive is an instance of  `telegram.ext.InvalidCallbackData`. If you don't need persistence otherwise, you can set `store_callback_data` to `True` and all the others to `False`.
+1. If you don't use [persistence](../wiki/Making-your-bot-persistent), buttons won't work after restarting your bot, as the stored updates are lost. More precisely, the `callback_data` you will receive is an instance of  `telegram.ext.InvalidCallbackData`. If you don't need persistence otherwise, you can set `store_callback_data` to `True` and all the others to `False`.
 2. If you have a number of keyboards that need to stay valid for a very long time, you might need to do some tweaking manually (see below)
 3. When using the `CallbackQueryHandler`, the `pattern` argument can now be either
 
     * a regex expression, which will be used, if the `callback_data` is in fact a string
-    * a callable accepting the `callback_data` as only argument. You can perform any kinds of tests on the `callback_data` and return `True` ore `False` accordingly
+    * a callable accepting the `callback_data` as only argument. You can perform any kinds of tests on the `callback_data` and return `True` or `False` accordingly
     * a type. In that case the `CallbackQuery` will be handled, if the `callback_data` is an instance of that type. Btw: This allows you to inform users, when a buttons' data has been dropped from cache. With `CallbackQueryHandler(callback, pattern=InvalidCallbackData)` you can e.g., call `await update.callback_query.answer(text='Button is no longer valid', show_alert=True)` to inform the user.
 
 ## Memory Usage

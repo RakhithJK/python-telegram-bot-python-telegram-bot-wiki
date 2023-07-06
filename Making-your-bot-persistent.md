@@ -37,6 +37,7 @@ If you've written a persistence class that could benefit others (e.g., a general
 
 These 3rd party packages contain persistence classes (the list is incomplete):
 * [python-telegram-bot-django-persistence](https://github.com/GamePad64/python-telegram-bot-django-persistence) - Uses Django ORM to store persistence data. It is most useful for projects, that use PTB and Django.
+* [MongoPersistence](https://github.com/LucaSforza/MongoPersistence) - Package to add persistence to your telegram bot and upload data to your mongo database.
 
 ## What do I need to change?
 
@@ -55,7 +56,7 @@ You can customize the interval via the [`update_interval`](https://python-telegr
 
 ### ⚠️ Note
 
-Since the persisted data is loaded on start-up, any data written to `Application.{bot, chat, user_data}` *before* startup will hence be overridden! To manually write data into these *after* the persisted data has been loaded, please use [`Application.post_init`](https://docs.python-telegram-bot.org/en/v20.0a4/telegram.ext.applicationbuilder.html?highlight=ApplicationBuilder#telegram.ext.ApplicationBuilder.post_init).
+Since the persisted data is loaded on start-up, any data written to `Application.{bot, chat, user_data}` *before* startup will hence be overridden! To manually write data into these *after* the persisted data has been loaded, please use [`Application.post_init`](https://docs.python-telegram-bot.org/telegram.ext.applicationbuilder.html?highlight=ApplicationBuilder#telegram.ext.ApplicationBuilder.post_init).
 
 ## Refreshing at runtime
 
@@ -82,3 +83,6 @@ Indeed, this is basically what the built-in `PicklePersistence` does.
 
 For more technical details, please refer to the documentation of [`BasePersistence`](https://python-telegram-bot.readthedocs.io/telegram.ext.basepersistence.html#telegram-ext-basepersistence), 
 [`PicklePersistence`](https://python-telegram-bot.readthedocs.io/telegram.ext.picklepersistence.html#telegram-ext-picklepersistence)
+
+### ⚠️ Note
+Although `PicklePersistence` does the 'placeholder' process described above, all the data are deep copied with `copy.deepcopy` before being handed over to persistence. This means that you should either store only copyable data (e.g. no `telegram.Bot` objects) and/or ensure that your stored data defines appropriate custom deepcopy behavior. This technical detail is described in a note [here](https://docs.python-telegram-bot.org/telegram.ext.application.html#telegram.ext.Application.update_persistence)

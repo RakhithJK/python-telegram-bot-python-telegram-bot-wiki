@@ -25,7 +25,7 @@ PTB offers different resources that help you understand and use the features of 
 
 [package documentation]: https://python-telegram-bot.readthedocs.io/
 [wiki]: https://github.com/python-telegram-bot/python-telegram-bot/wiki/
-[examples directory]: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/README.md
+[examples directory]: https://docs.python-telegram-bot.org/examples.html
 [official Telegram Bot API documentation]: https://core.telegram.org/bots/api
 
 

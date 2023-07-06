@@ -21,8 +21,8 @@ The `Dispatcher` class has now a cleaner interface and more precise Message filt
 > - The first handler in a group which should handle an update will be used. Other handlers from the group will not be used. The order in which handlers were added to the group defines the priority.
 
 > ##### Parameters:
-> `handler (Handler)` – A Handler instance  
-> `group (optional[int])` – The group identifier. Default is `0`
+> `handler (Handler)` - A Handler instance  
+> `group (optional[int])` - The group identifier. Default is `0`
 
 > #### `add_error_handler(callback)`
 

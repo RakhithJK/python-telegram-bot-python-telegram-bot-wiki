@@ -1,7 +1,9 @@
+# ⚠️ This is the v20.x version of the wiki. For the v13.x version, please head [here](https://github.com/python-telegram-bot/v13.x-wiki/wiki).
+
 ## Must read
 
 1. [[Introduction to the API|Introduction-to-the-API]]
-2. [[Tutorial: Your first bot|Extensions-–-Your-first-Bot]]
+2. [[Tutorial: Your first bot|Extensions---Your-first-Bot]]
 3. [[FAQ|Frequently-Asked-Questions]]
 4. [[How to ask good questions|Ask-Right]]
 5. [[How to write an MWE|MWE]]
@@ -11,16 +13,17 @@
 1. [[Architecture Overview|Architecture]]
 2. [Builder Pattern for `Application`](Builder-Pattern)
 3. [[Types of Handlers|Types-Of-Handlers]]
-4. [[Exceptions, Warnings and Logging|Exceptions, Warnings and Logging]]
-5. [[Concurrency in PTB|Concurrency]]
+4. [[Working with Files and Media]]
+5. [[Exceptions, Warnings and Logging|Exceptions, Warnings and Logging]]
+6. [[Concurrency in PTB|Concurrency]]
 
 ## Notable Features
 
-1. [[Advanced Filters|Extensions-–-Advanced-Filters]]
+1. [[Advanced Filters|Extensions---Advanced-Filters]]
 2. [[Storing data|Storing-bot,-user-and-chat-related-data]]
 3. [[Making your bot persistent|Making-your-bot-persistent]]
 4. [[Adding Defaults|Adding-defaults-to-your-bot]]
-5. [[Job Queue|Extensions-–-JobQueue]]
+5. [[Job Queue|Extensions---JobQueue]]
 6. [Arbitrary `callback_data`](Arbitrary-callback_data)
 7. [[Avoiding flood limits|Avoiding-flood-limits]]
 8. [[Webhooks|Webhooks]]
@@ -68,3 +71,4 @@
 - [[How To Release|Releasing-a-new-version]]
 - [[Bots, Groups & Channels|Project-Bots,-Groups-and-Channels]]
 - [[PTB tests knowledge base|PTB-test-writing-knowledge-base]]
+- [[Bot API Backward Compatibility|Bot-API-Backward-Compatibility]]

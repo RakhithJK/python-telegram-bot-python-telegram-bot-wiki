@@ -6,18 +6,18 @@ Before we list a few of them, here are some very important notes:
 
 ### Avoid premature optimization
 
-Putting hours over overs of work into squeezing the last bit of performance optimization is not worth a penny if your bot doesn't actually get a lot of traffic.
+Putting hours upon hours into squeezing every last bit of performance out of your code is worthless if your bot doesn't actually get much traffic.
 Before you start optimizing, you should assess the actual usage of your bot.
 For example, you can track the number of updates your bot receives along with a timestamp such that you can get an overview of the number of updates it processes on average.
 Also check if your bot gets new updates in peaks or if they are spread evenly across the day.
 
-### Misguided directed optimization
+### Avoid misdirected optimizations
 
-As mentioned above, not all different ways to improve performance work for everyone.
-More precisely, which methods to choose depends on which parts of your code slows down the bot the most.
+Not all ways of improving performance will work for everyone.
+More precisely, which methods to choose depend on which parts of your code slow down the bot the most.
 
 If you do a lot of requests to the Bot API/an external API - i.e. I/O tasks -, concurrency may help.
-OTOH, if you do some heavy calculations, i.e. CPU-bound tasks, you can use `asyncio.create_task` as often as you want without making any progress in terms of performance.
+OTOH, if you do a lot of heavy calculations, i.e. CPU-bound tasks, you can use `asyncio.create_task` all you want but you won't make much progress in terms of performance.
 
 You should carefully analyze your bot and check e.g. which handler callbacks take the most runtime and check how to minimize that.
 

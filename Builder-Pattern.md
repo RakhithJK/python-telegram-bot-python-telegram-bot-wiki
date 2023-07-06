@@ -29,7 +29,7 @@ you will automatically have
 
 But what if you want to customize some arguments that `Application`, `Updater`, `Bot`, `BaseRequest` or other components accept? Do you have to build all those objects yourself and glue them together? No! (Well, you can, but you don't have to.)
 
-This is, where the [builder pattern](https://en.wikipedia.org/wiki/Builder_pattern) comes into play. The idea is roughly as follows: You went shopping and have all the ingredients for a nice stew, but you don't want to cook yourself. So you hand everything to a chef. The chef will tell you that some of your ingredients don't match and will discard them. Afterwards, he'll cook a nice stew for you and you never need to worry about how exactly that's done.
+This is where the [builder pattern](https://en.wikipedia.org/wiki/Builder_pattern) comes into play. The idea is roughly as follows: You went shopping and have all the ingredients for a nice stew, but you don't want to cook yourself. So you hand everything to a chef. The chef will tell you that some of your ingredients don't match and will discard them. Afterwards, he'll cook a nice stew for you and you never need to worry about how exactly that's done.
 
 Let's get a bit more technical. First, we need the cook:
 

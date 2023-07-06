@@ -1,7 +1,7 @@
 # Architecture
 
 The `telegram` and `telegram.ext` packages contain several classes that make writing (chat)bots easy.
-You have met most of them in the [[tutorial|Extensions-–-Your-first-Bot]].
+You have met most of them in the [[tutorial|Extensions---Your-first-Bot]].
 Because all of that can be a bit overwhelming, the below diagram gives you an overview of how the different components interact with each other.
 
 [[/assets/ptb_architecture.png]]
@@ -11,6 +11,7 @@ Because all of that can be a bit overwhelming, the below diagram gives you an ov
 
 `python-telegram-bot` is designed such that you can adjust it to many use cases.
 In particular, many components/features are optional and some can even be fully customized.
+Moreover, the design allows the library to be used alongside other `asyncio` frameworks in the same Python script. We have a dedicated section on this in the [over here](../Frequently-requested-design-patterns#running-ptb-alongside-other-asyncio-frameworks).
 
 ## Opt-in and Opt-out components
 

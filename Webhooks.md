@@ -1,5 +1,5 @@
 ## Introduction
-Our examples usually start the bot using `Updater.start_polling`. This method uses the [getUpdates](https://core.telegram.org/bots/api#getupdates) API method to receive new updates for your bot. This is fine for smaller to medium-sized bots and for testing, but if your bot receives a lot of traffic, it might slow down the response times. There might be other reasons for you to switch to a webhook-based method for update retrieval.
+Our [examples](https://docs.python-telegram-bot.org/examples.html) usually start the bot using [`Application.run_polling`](https://docs.python-telegram-bot.org/telegram.ext.application.html#telegram.ext.Application.run_polling). This method uses the [getUpdates](https://core.telegram.org/bots/api#getupdates) API method to receive new updates for your bot. This is fine for smaller to medium-sized bots and for testing, but if your bot receives a lot of traffic, it might slow down the response times. There might be other reasons for you to switch to a webhook-based method for update retrieval.
 
 **First things first:** You should have a good reason to switch from polling to a webhook. Don't do it simply because it sounds cool.
 
@@ -36,7 +36,7 @@ If you don't already have a verified certificate, use a self-signed one. It's ea
 #### Creating a self-signed certificate using OpenSSL
 To create a self-signed SSL certificate using `openssl`, run the following command:
 ```
-openssl req -newkey rsa:2048 -sha256 -nodes -keyout private.key -x509 -days 3650 -out cert.pem
+openssl req -newkey rsa:2048 -sha256 -noenc -keyout private.key -x509 -days 3650 -out cert.pem
 ```
 
 The `openssl` utility will ask you for a few details. **Make sure you enter the correct FQDN!** If your server has a domain, enter the full domain name here (eg. `sub.example.com`). If your server only has an IP address, enter that instead. If you enter an invalid FQDN (Fully Qualified Domain Name), you won't receive any updates from Telegram but also won't see any errors!
@@ -47,18 +47,18 @@ There actually is a third requirement: a HTTP server to listen for webhook conne
 ### The integrated webhook server
 The `python-telegram-bot` library ships a custom HTTP server, that is tightly integrated in the `telegram.ext` module and can be started using `Updater.start_webhook`/`Application.run_webhook`. This webserver also takes care of decrypting the HTTPS traffic. It is probably the easiest way to set up a webhook.
 
-However, there is a limitation with this solution. Telegram currently only supports four ports for webhooks: *443, 80, 88* and *8443.* As a result, you can only run a **maximum of four bots** on one domain/IP address. 
+However, there is a limitation with this solution. Telegram currently only supports four ports for webhooks: *443, 80, 88* and *8443.* As a result, you can only run a **maximum of four bots** on one domain/IP address with the integrated server. 
 
-If that's not a problem for you (yet), you can use the code below (or similar) to start your bot with a webhook. The `listen` address should either be `'0.0.0.0'` or, if you don't have permission for that, the public IP address of your server. The port can be one of `443`, `80`, `88` or `8443`. For the `url_path`, it is recommended to use your Bot's token, so no one can send fake updates to your bot. `key` and `cert` should contain the path to the files you generated [earlier](#creating-a-self-signed-certificate-using-openssl). The `webhook_url` should be the actual URL of your webhook. Include the `https://` protocol in the beginning, use the domain or IP address you set as the FQDN of your certificate and the correct port and URL path.
+If that's not a problem for you (yet), you can use the code below (or similar) to start your bot with a webhook. The `listen` address should either be `'0.0.0.0'` or, if you don't have permission for that, the public IP address of your server. The port can be one of `443`, `80`, `88` or `8443`. It is recommended to set a secret token in the `secret_token` parameter, so no one can send fake updates to your bot. `key` and `cert` should contain the path to the files you generated [earlier](#creating-a-self-signed-certificate-using-openssl). The `webhook_url` should be the actual URL of your webhook. Include the `https://` protocol in the beginning, use the domain or IP address you set as the FQDN of your certificate and the correct port and URL path.
 
 ```python
 application.run_webhook(
     listen='0.0.0.0',
     port=8443,
-    url_path='TOKEN',
+    secret_token='ASecretTokenIHaveChangedByNow',
     key='private.key',
     cert='cert.pem',
-    webhook_url='https://example.com:8443/TOKEN'
+    webhook_url='https://example.com:8443'
 )
 ```
 
@@ -82,13 +82,13 @@ PORT = int(os.environ.get('PORT', '8443'))
 application.run_webhook(
     listen="0.0.0.0",
     port=PORT,
-    url_path=TOKEN,
-    webhook_url="https://<appname>.herokuapp.com/" + TOKEN
+    secret_token='ASecretTokenIHaveChangedByNow',
+    webhook_url="https://<appname>.herokuapp.com/"
 )
 ```
 
 #### Using nginx with one domain/port for all bots
-This is similar to the Heroku approach, just that you set up the reverse proxy yourself. All bots set their `url` to the same domain and port, but with a different `url_path`. The integrated server should usually be started on the `localhost` or `127.0.0.1` address, the port can be any port you choose.
+This is similar to the Heroku approach, just that you set up the reverse proxy yourself. All bots set their `url` to the same domain and port. To differentiate the bots, add a different `url_path`. The integrated server should usually be started on the `localhost` or `127.0.0.1` address, the port can be any port you choose.
 
 **Note:** `example.com` could be replaced by an IP address, if you have no domain associated to your server.
 
@@ -97,8 +97,9 @@ Example code to start the bot:
 application.run_webhook(
     listen='127.0.0.1',
     port=5000,
-    url_path='TOKEN1',
-    webhook_url='https://example.com/TOKEN1',
+    url_path='1',
+    secret_token='ASecretTokenIHaveChangedByNow',
+    webhook_url='https://example.com/1',
     cert='cert.pem'
 )
 ```
@@ -112,17 +113,17 @@ server {
     ssl_certificate_key private.key;
 
     location /TOKEN1 {
-        proxy_pass http://127.0.0.1:5000/TOKEN1/;
+        proxy_pass http://127.0.0.1:5000/1/;
     }
 
     location /TOKEN2 {
-        proxy_pass http://127.0.0.1:5001/TOKEN2/;
+        proxy_pass http://127.0.0.1:5001/2/;
     }
 }
 ```
 
 #### Using haproxy with one subdomain per bot
-In this approach, each bot is assigned their own *subdomain*. If your server has the domain *example.com*, you could have the subdomains *bot1.example.com*, *bot2.example.com* etc. You will need one certificate for each bot, with the FQDN set for their respective subdomain. The reverse proxy in this example is `haproxy`. The integrated server should usually be started on the `localhost` or `127.0.0.1` address, the port can be any port you choose.
+In this approach, each bot is assigned their own *subdomain*. If your server has the domain *example.com*, you could have the subdomains *bot1.example.com*, *bot2.example.com* etc. You will need one certificate for each bot, with the FQDN set for their respective subdomain (or a wildcard certificate). The reverse proxy in this example is `haproxy`. The integrated server should usually be started on the `localhost` or `127.0.0.1` address, the port can be any port you choose.
 
 **Note:** For this to work, you need a domain for your server.
 
@@ -131,8 +132,8 @@ Example code to start the bot:
 application.run_webhook(
     listen='127.0.0.1',
     port=5000,
-    url_path='TOKEN',
-    webhook_url='https://bot1.example.com/TOKEN',
+    secret_token='ASecretTokenIHaveChangedByNow',
+    webhook_url='https://bot1.example.com',
     cert='cert_bot1.pem')
 )
 ```
@@ -160,7 +161,7 @@ backend bot2
 ### Custom solution
 You don't necessarily have to use the integrated webserver *at all*. If you choose to go this way, **you should not use the `Updater` class.** The `telegram.ext` module was designed with this option in mind, so you can still use the `Application` class to profit from the message filtering/sorting it provides. You will have to do some work by hand, though.
 
-The general idea is outlined below.
+The general idea is outlined below and also explained in more detail in [this wiki section](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Frequently-requested-design-patterns#running-ptb-alongside-other-asyncio-frameworks).
 
 ```python
 from telegram import Bot
@@ -185,7 +186,7 @@ Here, `start_fetching_updates` is a placeholder for whichever method you use to 
 The important part is that you enqueue the received updates into the `update_queue`.
 That is, call `await update_queue.put(update)`, where `update` is the decoded `Update` object (use `Update.de_json(json.loads(text), bot)` to decode the update from the received JSON data).
 
-We have an example using this approach available [here](https://docs.python-telegram-bot.org/en/v20.0a1/examples.html#examples-customwebhookbot).
+We have an example using this approach available [here](https://docs.python-telegram-bot.org/examples.html#examples-customwebhookbot).
 
 #### Alternative: No long running tasks
 If you don't want to use the long running tasks started by `application.start()`, you don't have to!

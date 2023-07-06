@@ -2,7 +2,7 @@ You've now made a cool bot, but it's lacking personality? Add some emoji!
 
 # Direct Method
 
-The easiest way to use emoji is to directly put them in your strings. The Unicode website has a chart with [all the emoji](http://www.unicode.org/emoji/charts/full-emoji-list.html). Simply select any emoji you want, this works with both the images and the raw characters in the "Brow." column, and paste it in your string.
+The easiest way to use emoji is to directly put them in your strings. The Unicode website has a chart with [all the emoji](http://www.unicode.org/emoji/charts/full-emoji-list.html). Simply select any emoji you want, this works with both the images and the raw characters in the "Browser" column, and paste it in your string.
 
 ```python
 text = "🌈⛈🎉🌹🐧😊"

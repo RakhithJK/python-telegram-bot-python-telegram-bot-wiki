@@ -7,7 +7,7 @@ The linked articles/blog posts on how to use PTB with the different providers ar
 * usually written for a specific (range of) versions of `python-telegram-bot` and may not be compatible with the version that you are using
 * not written or maintained by the PTB dev team.
 
-When in doubt, please check the official PTB resoruces.
+When in doubt, please check the official PTB resources.
 
 ### Cloud
 * [Amazon Web Services](https://aws.amazon.com/)
@@ -21,6 +21,7 @@ When in doubt, please check the official PTB resoruces.
     * **[Building a serverless Telegram bot](https://seminar.io/2018/09/03/building-serverless-telegram-bot/)** by [pabluk](https://github.com/pabluk)
 * [Google Cloud Run](https://cloud.google.com/run/) 
     * **[Hosting Telegram bots on Cloud Run for free](https://nullonerror.org/2021/01/08/hosting-telegram-bots-on-google-cloud-run/)** by [skhaz](https://github.com/skhaz/)
+* [Back4App](https://www.back4app.com)
 * [Heroku](https://www.heroku.com/)
     * **[Heroku getting started with Python](https://devcenter.heroku.com/articles/getting-started-with-python#introduction)**
     * **[[Webhooks on Heroku|Webhooks#heroku]]**
@@ -36,6 +37,8 @@ When in doubt, please check the official PTB resoruces.
 * [Vercel serverless functions](https://vercel.com/docs/serverless-functions/supported-languages#python)
 * [PythonAnywhere](https://www.pythonanywhere.com)
 * [Oracle Cloud](https://www.oracle.com/cloud/free/) an AlwaysFree feature for a decent instance.
+* [Deta](https://www.deta.sh/)
+    * **[python-telegram-bot template on deta.sh](https://github.com/suriing/telegram-bot-template-on-deta)**
 
 ### VPS
 * [DigitalOcean](https://www.digitalocean.com/)

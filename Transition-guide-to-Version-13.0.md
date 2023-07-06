@@ -99,7 +99,7 @@ But what does this mean for you in detail? If you're scheduling tasks vanilla st
 context.job_queue.run_once(callback, when)
 ```
 
-you will only have to change the handling of time zones, or likely nothing at all. In fact, everything covered in this [[wiki article|Extensions-–-JobQueue]] will work unchanged except for time zones. So before bothering to read on, just try to run you bot - in most cases it will still work. However, there are some more advanced things which changed.
+you will only have to change the handling of time zones, or likely nothing at all. In fact, everything covered in this [[wiki article|Extensions---JobQueue]] will work unchanged except for time zones. So before bothering to read on, just try to run you bot - in most cases it will still work. However, there are some more advanced things which changed.
 
 ## Handling of time zones
 

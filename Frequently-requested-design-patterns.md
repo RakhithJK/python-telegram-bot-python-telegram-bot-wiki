@@ -13,15 +13,17 @@ This page is a collection of sorts, dedicated to showcase design patterns we get
 - [How do I deal with a media group?](#how-do-i-deal-with-a-media-group)
   - [Timer based approach](#timer-based-approach)
   - [Manual approach](#manual-approach)
+- [Running PTB alongside other `asyncio` frameworks](#running-ptb-alongside-other-asyncio-frameworks)
+- [How to deal with multiple CBQ from one button](#how-to-deal-with-multiple-CBQ-from-one-button)
 
 ## Requirements
 
 Knowing how to make bots with PTB is enough. That means you should be familiar with Python and with PTB.
-If you haven't worked on anything with PTB, then please check [Introduction to the API](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Introduction-to-the-API).
+If you haven't worked on anything with PTB, then please check [Introduction to the API](../Introduction-to-the-API) as well as the [Tutorial: Your first Bot](../Extensions---Your-first-Bot).
 
 ## How to handle updates in several handlers
 
-At some point developing ones bots, most of us face the following question
+At some point developing one's bots, most of us face the following question
 
 > How do I handle an update _before_ other handlers?
 
@@ -89,6 +91,8 @@ Now let us solve the specific use cases. All you need to do is modify your `call
 
 ### How do I limit who can use my bot?
 
+> Please be sure to start reading this section from the [top](#how-to-handle-updates-in-several-handlers).
+
 To restrict your bot to a set of users or if you don't want it to be available for a specific group of people, you can use a `callback` similar to the following. Remember, the process is same if you want to enable/disable the bot for groups or channels.
 
 ```python
@@ -107,6 +111,8 @@ Don't forget that you can also use [decorators](https://github.com/python-telegr
 If you want a more streamlined style of managing permissions (like superuser, admin, users) then [ptbcontrib/roles](https://github.com/python-telegram-bot/ptbcontrib/tree/main/ptbcontrib/roles) is worth checking out.
 
 ### How do I rate limit users of my bot?
+
+> Please be sure to start reading this section from the [top](#how-to-handle-updates-in-several-handlers).
 
 The exact definition of _rate limit_ depends on your point of view. You typically should keep record of previous usage of the user and warn them when they cross a limit. Here, for demonstration, we use a method that restricts the usage of the bot for 5 minutes.
 
@@ -157,7 +163,7 @@ Otherwise depending on whether the user in the channel, has joined and left agai
 - raise an exception and in this case the error message will probably be helpful
 - return a [`ChatMember`](https://python-telegram-bot.readthedocs.io/telegram.chatmember.html#telegram.ChatMember) instance. In that case make sure to check the [`ChatMember.status`](https://python-telegram-bot.readthedocs.io/telegram.chatmember.html#telegram.ChatMember.status) attribute
 
-Since API 5.1 (PTB v13.4+) you can alternatively use the [`ChatMember`](https://python-telegram-bot.readthedocs.io/telegram.chatmemberupdated.html) updates to keep track of users in channels. See [`chatmemberbot.py`](https://github.com/python-telegram-bot/python-telegram-bot/tree/master/examples#chatmemberbotpy) for an example.
+Since API 5.1 (PTB v13.4+) you can alternatively use the [`ChatMember`](https://python-telegram-bot.readthedocs.io/telegram.chatmemberupdated.html) updates to keep track of users in channels. See [`chatmemberbot.py`](https://docs.python-telegram-bot.org/examples.html#examples-chatmemberbot) for an example.
 
 If the user has not yet joined the channel, you can ignore incoming updates from that user or reply to them with a corresponding warning. A convenient way to do that is by using [TypeHandler](https://python-telegram-bot.readthedocs.io/telegram.ext.typehandler.html). Read this [section](#how-do-i-limit-who-can-use-my-bot) to learn how to do it.
 
@@ -167,13 +173,16 @@ Let's first point out an easy alternative solution: Instead of sending the messa
 
 If that doesn't work for you, here we go:
 
-To send a message to all users, you of course need the IDs of all the users. You'll have to keep track of those yourself. The most reliable way for that are the [`my_chat_member`](https://python-telegram-bot.readthedocs.io/telegram.chatmemberupdated.html) updates. See [`chatmemberbot.py`](https://github.com/python-telegram-bot/python-telegram-bot/tree/master/examples#chatmemberbotpy) for an example on how to use them.
+To send a message to all users, you of course need the IDs of all the users. You'll have to keep track of those yourself. The most reliable way for that are the [`my_chat_member`](https://python-telegram-bot.readthedocs.io/telegram.chatmemberupdated.html) updates. See [`chatmemberbot.py`](https://docs.python-telegram-bot.org/examples.html#examples-chatmemberbot) for an example on how to use them.
 
 If you didn't keep track of your users from the beginning, you may have a chance to get the IDs anyway, if you're using persistence. Please have a look at [this issue](https://github.com/python-telegram-bot/python-telegram-bot/issues/1836) in that case.
 
 Even if you have all the IDs, you can't know if a user has blocked your bot in the meantime. Therefore, you should make sure to wrap your send request in a `try-except` clause checking for [`telegram.error.Forbidden`](https://python-telegram-bot.readthedocs.io/telegram.error.html#telegram.error.Forbidden) errors.
 
-Finally, note that Telegram imposes some limits that restrict you to send ~30 Messages per second. If you have a huge user base and try to notify them all at once, you will get flooding errors. To prevent that, try spreading the messages over a long time range. A simple way to achieve that is to leverage the [`JobQueue`](Extensions-–-JobQueue).
+Finally, note that Telegram imposes some limits that restrict you to send ~30 Messages per second. If you have a huge user base and try to notify them all at once, you will get flooding errors. To prevent that, try spreading the messages over a long time range. To achieve that you can use e.g.
+
+* the [`JobQueue`](../wiki/Extensions---JobQueue)
+* PTBs mechanism to [avoid flood limits](../wiki/Avoiding-flood-limits)
 
 ## How do I deal with a media group?
 
@@ -200,3 +209,125 @@ There is a possibility that a part of the media group is received after the time
 This approach has two upsides: You don't force users to use media groups (so they can e.g. send more media then fits in one group) and you will not miss a media. The downside is that it requires manual interaction from users, and we all know how special users can be :)
 
 The idea behind this approach is to start a upload segment in your code. Either in a `ConversationHandler` or with a `CommandHandler`. Ask the user then to send all medias. Once they send the first (or the first media group, this doesn't matter in your code), you store the information you need in an array. Then you ask them to send either more or send a command like `/finish` / a specific text message you intercept with a [MessageHandler + regex Filter](../Types-of-Handlers#pattern-matching-filtersregex). The point behind this is to have the user finish the addition of media on their own terms. Once they triggered the second handler, you can consider the array finished.
+
+## Running PTB alongside other `asyncio` frameworks
+
+The [tutorial](../Extensions---Your-first-Bot) as well (almost) all the [examples](https://docs.python-telegram-bot.org/examples.html#examples-chatmemberbot) make use of [`Application.run_polling`](https://docs.python-telegram-bot.org/telegram.ext.application.html#telegram.ext.Application.run_polling).
+This method is blocking, which means that no other `asyncio` related code can be started while it is running.
+This is okay as long your Python script runs only your bot.
+However, if you want to run multiple bots in the same Python script or other `asyncio` frameworks (e.g. a webserver) alongside your bot, this becomes an issue.
+
+The `Application` class was designed with these use cases in mind and `Application.run_polling` can be understood as mainly a  convenience method for the important use case of running "just" a single bot.
+The same holds for `Application.run_webhook.`
+
+Without using `Application.run_{webhook, polling}`, the overall logic of startup and shutdown of the `Application` is as follows:
+
+```python
+application = ApplicationBuilder().token("TOKEN").build()
+
+async def main():
+    await application.initialize()
+    await application.start()
+    await application.updater.start_{webhook, polling}()
+    # Start other asyncio frameworks here
+    # Add some logic that keeps the event loop running until you want to shutdown
+    # Stop the other asyncio frameworks here
+    await application.updater.stop()
+    await application.stop()
+    await application.shutdown()
+```
+
+Several things to note here:
+
+* Of course, the "other `asyncio` framework" could be another `Application`, i.e. a second bot that you want to run in the same Python script.
+* The important part is that `Application.initialize`, `Application.start`, `Updater.start_{webhook, polling}`, `Application.stop` and `Application.shutdown` are called in the shown order. How exactly this is done is up to you. E.g. it may be beneficial to use `loop.run_until_complete` instead of `await`-ing the coroutines.
+* Instead of calling `Application.{initialize, shutdown}`, you can also use the application as a context manager, i.e.
+  ```python
+  application = ApplicationBuilder().token("TOKEN").build()
+  
+  async def main():
+      async with application:  # Calls `initialize` and `shutdown`
+          await application.start()
+          await application.updater.start_{webhook, polling}()
+          # Start other asyncio frameworks here
+          # Add some logic that keeps the event loop running until you want to shutdown
+          # Stop the other asyncio frameworks here
+          await application.updater.stop()
+          await application.stop()
+  ```
+* Clean startup, execution and shutdown of `asyncio` processes is not a trivial topic, there are many approaches to this and probably just as many opinions on which is the best.
+  Covering this topic is out of scope for this wiki.
+  The important point however is that there is not a single "right" way to do this - for PTB or in general.
+  In particular the part where you have to keep the event loop running can take differnt form depending on your use case, your personal preferences and the frameworks you use.
+  If you are interested, we invite you to have a look at the [source code](https://github.com/python-telegram-bot/python-telegram-bot/blob/master/telegram/ext/_application.py) of the `Application.run_{webhook, polling}` methods to see how PTB handles this.
+* Shutdown logic of `asyncio` processes may involve any pending `asyncio.Tasks` by cancelling all tasks returned by `asyncio.all_tasks`. This should be done only *after* `Application.stop` was called, since `Application.start` starts `asyncio.Tasks` in the background that should be allowed to finish.
+* Calling `application.updater.start_{webhook, polling}` is not mandatory.
+  In fact, using PTBs `Updater` for fetching updates from Telegram is optional, and you can use a custom implementation instead, if you like (see [[this wiki page|Architecture]] for details).
+  The [`customwebhookbot`](https://docs.python-telegram-bot.org/examples.html#examples-customwebhookbot) example showcases this use case, which also involves manually starting and stopping the application. Keeping the event loop running is covered by the `uvicorn` framework in this example.
+
+## How to deal with multiple CBQ from one button
+A common design is to have an inline keyboard and on pressing the button, edit the message to have this button vanish. Short example:
+
+```python
+import asyncio
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes
+
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Sends a message with an inline buttons attached."""
+    keyboard = [[InlineKeyboardButton("Button To Vanish", callback_data="1")]]
+    await update.message.reply_text(
+        "Spam it", reply_markup=InlineKeyboardMarkup(keyboard)
+    )
+
+
+async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Parses the CallbackQuery and updates the message text."""
+    query = update.callback_query
+    await query.answer()
+    # long wait for something
+    await asyncio.sleep(5)
+    await query.edit_message_text(text=f"You did it")
+
+
+def main() -> None:
+    """Run the bot."""
+    application = Application.builder().token("TOKEN").build()
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(CallbackQueryHandler(button))
+    application.run_polling()
+
+
+if __name__ == "__main__":
+    main()
+
+```
+As you can see, the button has to wait for 5 seconds, which allows impatient users to spam the button. This results in multiple callback query updates from this button, even though (without the sleep call) you might expect just one CBQ update from it. All "duplicate" updates from the button will result in a _BadRequest_, because the message content is the same one as the previous (it was already edit to "You did it" and the code tries to edit it to the same text again).
+
+The solution to this problem is to keep track independently if the message was already edited. Thanks to user data, this is achieved quite easily:
+```python
+
+async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Parses the CallbackQuery and updates the message text."""
+    query = update.callback_query
+    unique_data = query.data + (
+        query.inline_message_id
+        if query.inline_message_id
+        else str(query.message.message_id)
+    )
+    if "last_cbq" not in context.user_data:
+        context.user_data["last_cbq"] = unique_data
+    else:
+        if context.user_data["last_cbq"] == unique_data:
+            return
+    await query.answer()
+    # long wait for something
+    await asyncio.sleep(5)
+    await query.edit_message_text(text=f"You did it")
+```
+This setup has two downsides:
+1. You have to write this in the beginning of each CBQ handler. You can either use a [decorators](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#restrict-access-to-a-handler-decorator) or a [separate handler](#how-to-handle-updates-in-several-handlers) to avoid this.
+1. You can not edit in a button with the same callback data as the previous one in the same message.
+
+If you remember the last point, you will not face any issues with this solution however.

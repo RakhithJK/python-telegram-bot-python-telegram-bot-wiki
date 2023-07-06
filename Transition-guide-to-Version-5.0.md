@@ -1,5 +1,5 @@
 ## JobQueue
-We did some serious work on the `telegram.ext.JobQueue` class. The changes are similar to the changes made to the `telegram.ext.Dispatcher` class in version 4. The [[Extensions – JobQueue|Extensions-–-JobQueue]] article has been updated with the changes.
+We did some serious work on the `telegram.ext.JobQueue` class. The changes are similar to the changes made to the `telegram.ext.Dispatcher` class in version 4. The [[Extensions - JobQueue|Extensions---JobQueue]] article has been updated with the changes.
 
 ## Botan
 Botan was moved from `telegram.utils.botan` to `telegram.contrib.botan`

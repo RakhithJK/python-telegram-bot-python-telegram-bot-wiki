@@ -16,11 +16,6 @@ It is also a follow-up to the page [[Introduction to the API|Introduction-to-the
     + [Post a text message with HTML formatting](#post-a-text-message-with-html-formatting)
     + [Message entities](#message-entities)
     + [Telegram formatting to BBCode](#telegram-formatting-to-bbcode)
-  * [Working with files and media](#working-with-files-and-media)
-    + [Posting files](#posting-files)
-    + [Sending files via inline mode](#sending-files-via-inline-mode)
-    + [Editing a file](#editing-a-file)
-    + [Downloading a file](#downloading-a-file)
   * [Keyboard Menus](#keyboard-menus)
     + [Custom Keyboards](#custom-keyboards)
     + [Remove a custom keyboard](#remove-a-custom-keyboard)
@@ -49,7 +44,7 @@ It is also a follow-up to the page [[Introduction to the API|Introduction-to-the
 #### Fetch updates
 To fetch messages sent to your Bot, you can use the [getUpdates](https://core.telegram.org/bots/api#getupdates) API method.
 
-**Note:** You don't have to use `get_updates` if you are writing your bot with the `telegram.ext` submodule, since `telegram.ext.Updater` takes care of fetching all updates for you. Read more about that [[here|Extensions-–-Your-first-Bot]].
+**Note:** You don't have to use `get_updates` if you are writing your bot with the `telegram.ext` submodule, since `telegram.ext.Updater` takes care of fetching all updates for you. Read more about that [[here|Extensions---Your-first-Bot]].
 
 ```python
 updates = await bot.get_updates()
@@ -92,7 +87,7 @@ await bot.send_message(chat_id=chat_id, text="I'm sorry Dave I'm afraid I can't 
 ---
 #### Reply to a message
 
-This is a shortcut to `bot.send_message` with same defaults. Read more about it [in the docs](http://python-telegram-bot.readthedocs.io/en/latest/telegram.html#telegram.Message.reply_text). 
+This is a shortcut to `bot.send_message` with same defaults. Read more about it [in the docs](https://docs.python-telegram-bot.org/telegram.message.html#telegram.Message.reply_text). 
 
 ```python
 await update.message.reply_text("I'm sorry Dave I'm afraid I can't do that.")
@@ -128,7 +123,7 @@ To catch the incoming message with the location/contact, use `MessageHandler` wi
 ---
 ### Message Formatting (bold, italic, code, ...)
 
-Telegram supports some formatting options for text. All the details about what is supported can be found [here](https://core.telegram.org/bots/api#formatting-options). Please keep in mind that you will have to escape the special characters as detailed in the documentation. PTB also offers a [helper function](https://python-telegram-bot.readthedocs.io/telegram.utils.helpers.html#telegram.utils.helpers.escape_markdown) for escaping of Markdown text. For escaping of HTML text, you can use [`html.escape`](https://docs.python.org/3/library/html.html?#html.escape) from the standard library.
+Telegram supports some formatting options for text. All the details about what is supported can be found [here](https://core.telegram.org/bots/api#formatting-options). Please keep in mind that you will have to escape the special characters as detailed in the documentation. PTB also offers a [helper function](https://docs.python-telegram-bot.org/telegram.helpers.html#telegram.helpers.escape_markdown) for escaping of Markdown text. For escaping of HTML text, you can use [`html.escape`](https://docs.python.org/3/library/html.html?#html.escape) from the standard library.
 
 You can format text with every API method/type that has a `parse_mode` parameter. In addition to editing your text as described in the link above, pass one of the parse modes available through [`telegram.constants.ParseMode`](https://python-telegram-bot.readthedocs.io/telegram.constants.html#telegram.constants.ParseMode) to the `parse_mode` parameter. Since the `5.0` update of the Bot API (version `13.1+` of PTB), you can alternatively pass a list of [`telegram.MessageEntities`](https://python-telegram-bot.readthedocs.io/telegram.messageentity.html) to the `entities` parameter.
 
@@ -250,130 +245,6 @@ entities = update.message.parse_caption_entities()
 bbcode = parse_bbcode(caption, entities, urled=True)
 ```
 `bbcode` will contain message/caption text formatted in BBCode. `urled` parameter determines if URLs in text are to be processed as links or left as text.
-
----
-### Working with files and media
-
-#### Posting files
-
-If you want to send a file, e.g. send a photo with the bot, you have three options:
-
-* Upload the file
-* Send an HTTP-link that leads to the file
-* Send a `file_id` of a file that has already been sent.
-
-Note that not every method is supported everywhere (e.g. for thumbnails you can't pass a `file_id`). Make sure to check out the documentation of the corresponding bot method for details.
-
-Please also check out the [official docs](https://core.telegram.org/bots/api#sending-files) on sending files.
-
-Let's have a look at how sending a document can be done.
-
-1. Uploading a file:
-
-    ```python
-    await bot.send_document(chat_id=chat_id, document=open('tests/test.png', 'rb'))
-    ```
-    or even just 
-
-    ```python
-    await bot.send_document(chat_id=chat_id, document='tests/test.png')
-    ```
-    When you pass a file path, PTB will automatically check if your bot is running in [local mode](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Local-Bot-API-Server#how-to-use-a-local-bot-api-server-with-ptb). If it is, the file does not need to be uploaded. Otherwise, the file is read in binary mode, so just as when you pass `open('tests/test.png', 'rb')`.
-
-2. Sending an HTTP-link
-
-    ```python
-    await bot.send_document(chat_id=chat_id, document='https://python-telegram-bot.org/static/testfiles/telegram.gif'))
-    ```
-
-3. Sending by `file_id`:
-
-    ```python
-    await bot.send_document(chat_id=chat_id, document=file_id))
-    ```
-    
-    Two further notes on this:
-    
-    1. Each bot has its own `file_ids`, i.e. you can't use a `file_id` from a different bot to send a photo
-    2. How do you get a `file_id` of a photo you sent? Read it from the return value of `bot.send_document` (or any other `Message` object you get your hands on):
-    
-        ```python
-        message = await bot.send_document(...)
-        file_id = message.document.file_id
-        ```
-       
-This pretty much works the same way for all the other `send_<media_type>` methods like `send_photo`, `send_video` etc. There is one exception, though: `send_media_group`. A call to `send_media_group` looks like this:
-
-```python
-await bot.send_media_group(chat_id=chat_id, media=[media_1, media_2, ...])
-```
-
-The items in the `media` list must be instances of `InputMediaAudio`, `InputMediaDocument`, `InputMediaPhoto` or `InputMediaVideo`. The media comes into play like so:
-
-```python
-media_1 = InputMediaDocument(media=open('tests/test.png', 'rb'), ...)
-media_1 = InputMediaDocument(media='https://python-telegram-bot.org/static/testfiles/telegram.gif', ...)
-media_1 = InputMediaDocument(media=file_id, ...)
-```
-
-Please check out the documentation of [`InputMediaAudio`](https://python-telegram-bot.readthedocs.io/telegram.inputmediaaudio.html), [`InputMediaDocument`](https://python-telegram-bot.readthedocs.io/telegram.inputmediadocument.html), [`InputMediaPhoto`](https://python-telegram-bot.readthedocs.io/telegram.inputmediaphoto.html#telegram.InputMediaPhoto) and [`InputMediaVideo`](https://python-telegram-bot.readthedocs.io/telegram.inputmediavideo.html#telegram.InputMediaVideo) for the details on required and optional arguments.
-
-Also note that you *can not* pass a file path to the `InputMedia*` classes.
-
----
-#### Sending files via inline mode
-
-You may want to allow users to send media via your bots inline mode. This works a little bit different than posting media via `send_*`. Most notable, you can't upload files for inline mode! You must provide either an HTTP-URL or a `file_id`.
-
-Let's stick to example of sending a document. Then you have to provide an `InlineQueryResult` to `bot.answer_inline_query` that represents that document and here are the two options:
-
-1. HTTP-URL:
-
-    ```python
-    result = InlineQueryResultDocument(document_url='https://python-telegram-bot.org/static/testfiles/telegram.gif', ...)
-    ```
-   
-2. `file_id`:
-
-    ```python
-    result = InlineQueryResultCachedDocument(document_file_id=file_id, ...)
-    ```
-
-The scheme `InlineQueryResult<media_type>` vs `InlineQueryResultCached<media_type>` is similar for the other media types.
-Again, please check out the docs for details on required and optional arguments. 
-
----
-#### Editing a file
-
-When you have sent a file, you may want edit it. This works similarly as `send_media_group`, i.e. the media must be wrapped into a `InputMedia<media_type>` object. Again, with `document` as example:
-
-```python
-await bot.edit_message_media(chat_id=chat_id, message_id=message_id, media=InputMediaDocument(media=open('tests/test.png'), ...))
-```
-
-Please check out the restrictions on editing media in the docs of [`edit_message_media`](https://core.telegram.org/bots/api#editmessagemedia).
-
----
-#### Downloading a file
-
-When you receive files from a user, you sometimes want to download and save them. If it's a document, that could look like this:
-
-```python
-file_id = message.document.file_id
-new_file = await bot.get_file(file_id)
-await new_file.download()
-```
-
-For a received video/voice/... change `message.document` to `message.video/voice/...`. However, there is one exception: `message.photo` is a *list* of `PhotoSize` objects, which represent different sizes of the same photo. Use `message.photo[-1].file_id` to get the largest size.
-
-Moreover, the above snippet can be shortened by using PTBs built-in utility shortcuts:
-
-```python
-new_file = await message.effective_attachment.get_file()
-await new_file.download('file_name')
-```
-
-`message.effective_attachment` automatically contains whichever media attachment the message has - in case of a photo, you'll again have to use e.g. `message.effective_attachment[-1].get_file()`
 
 ---
 ### Keyboard Menus
@@ -666,7 +537,7 @@ You can use the `header_buttons` and `footer_buttons` lists to put buttons in th
 
 ![Output](http://i.imgur.com/susvvR7.png)
 
-Replace the `...` in below snippet by an appropriate argument, as indicated in the [InlineKeyboardButton documentation](https://python-telegram-bot.readthedocs.io/en/latest/telegram.inlinekeyboardbutton.html). If you want to use `KeyboardButtons`, use `ReplyKeyboardMarkup` instead of `InlineKeyboardMarkup`.
+Replace the `...` in below snippet by an appropriate argument, as indicated in the [InlineKeyboardButton documentation](https:/docs.python-telegram-bot.org/telegram.inlinekeyboardbutton.html). If you want to use `KeyboardButtons`, use `ReplyKeyboardMarkup` instead of `InlineKeyboardMarkup`.
 
 ```python
 button_list = [

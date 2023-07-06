@@ -18,6 +18,9 @@
 - [Why am I getting an error `The following arguments have not been supplied`?](#why-am-i-getting-an-error-the-following-arguments-have-not-been-supplied)
 - [How can I check the version of PTB I am using?](#how-can-i-check-the-version-of-ptb-i-am-using)
 - [How do I access info about the message my bot sent?](#how-do-I-access-info-about-the-message-my-bot-sent)
+- [How can I print a table in a Telegram message? Is it a lost cause?](#how-can-i-print-a-table-in-a-telegram-message-is-it-a-lost-cause)
+- [Can an `InlineKeyboardButton` have both a URL and `callback-data`?](#can-an-inlinekeyboardbutton-have-both-a-url-and-callback-data)
+- [Why am I suddenly getting so many log entries from `httpx`?](#why-am-i-suddenly-getting-so-many-log-entries-from-httpx)
 
 ### What messages can my Bot see?
 
@@ -56,7 +59,7 @@ Yes, but only within the first 48 hours.
 
 ### How can I get a list of all chats/users/channels my bot is interacting with?
 
-There is no method for that. You'll need to keep track. See e.g. the [`chatmemberbot.py`](https://github.com/python-telegram-bot/python-telegram-bot/tree/master/examples#chatmemberbotpy) example.
+There is no method for that. You'll need to keep track. See e.g. the [`chatmemberbot.py`](https://docs.python-telegram-bot.org/en/stable/examples.html#examples-chatmemberbot) example.
 
 ### Does my bot get an update, when someone joins my channel?
 
@@ -72,11 +75,12 @@ Please note that python-telegram-bot is only a *wrapper* for the Telegram Bot AP
 You can find a full list of all available methods in the [official docs](https://core.telegram.org/bots/api#available-methods).
 Anything *not* listed there can not be done with bots. Here is a short list of frequently requested tasks, that can *not* be done with the Bot API:
 
-* Getting a list of all members of a group. You'll need to keep track, e.g. using approaches displayed in [chatmemberbot.py](https://github.com/python-telegram-bot/python-telegram-bot/tree/master/examples#chatmemberbotpy)
+* Getting a list of all members of a group. You'll need to keep track, e.g. using approaches displayed in [chatmemberbot.py](https://docs.python-telegram-bot.org/en/stable/examples.html#examples-chatmemberbot)
 * Adding members to a group/channel (note that you can just send an invite link, which is also less likely to be seen as spam)
 * Clearing the chat history for a user
 * Getting a message by its `message_id` (For the interested reader: see [here](https://github.com/tdlib/telegram-bot-api/issues/62))
 * Getting the last sent message in a chat (you can keep track of that by using [`chat_data`](Storing-bot,-user-and-chat-related-data))
+* Getting a users `user_id` via their `@username` (only userbots can do that - you may be interested in [`ptbcontrib/username_to_chat_api`](https://github.com/python-telegram-bot/ptbcontrib/tree/main/ptbcontrib/username_to_chat_api))
 
 In some cases, using a userbot can help overcome restrictions of the Bot API. Please have a look at this [article](http://telegra.ph/How-a-Userbot-superacharges-your-Telegram-Bot-07-09) about userbots.
 Note that userbots are not what python-telegram-bot is for.
@@ -93,9 +97,9 @@ Note that `your_update` should *not* need to be an instance of `telegram.Update`
 To actually do something with the update, you can register a [`TypeHandler`](https://python-telegram-bot.readthedocs.io/telegram.ext.typehandler.html). [`StringCommandHandler`](https://python-telegram-bot.readthedocs.io/telegram.ext.stringcommandhandler.html) and [`StringRegexHandler`](https://python-telegram-bot.readthedocs.io/telegram.ext.stringregexhandler.html) might also be interesting for some use cases.
 
 But how to get the updates into your bot process?
-For many cases a simple approach is to check for updates every x seconds. You can use the [`JobQueue`](Extensions-–-JobQueue) for that.
-If you can get the updates via a webhook, you can implement a custom webhook that handles both the Telegram and your custom updates. Please have a look at [this example](https://github.com/python-telegram-bot/python-telegram-bot/tree/master/examples#customwebhookbotpy) that showcases how that can be done.
-If your 3rd party service requires some other setup for fetching updates, that surely also be combined with PTB. Keep in mind that you basically only need access to the `(application/context).update_queue`.
+For many cases a simple approach is to check for updates every x seconds. You can use the [`JobQueue`](Extensions---JobQueue) for that.
+If you can get the updates via a webhook, you can implement a custom webhook that handles both the Telegram and your custom updates. Please have a look at [`customwebhookbot.py`](https://docs.python-telegram-bot.org/en/stable/examples.html#examples-customwebhookbot) example that showcases how that can be done.
+If your third-party service requires some other setup for fetching updates, that surely also be combined with PTB. Keep in mind that you basically only need access to the `(application/context).update_queue`.
 
 ### Why am I getting `ImportError: cannot import name 'XY' from 'telegram'`?
 
@@ -112,7 +116,7 @@ The default setting (`per_user=True` and `per_chat=True`) means that in each cha
 If you set `per_user=False` and you start a conversation in a group chat, the `ConversationHandler` will also accept input from other users.
 Conversely, if `per_user=True`, but `per_chat=False`, its possible to start a conversation in one chat and continue with it in another.
 
-`per_message` is slightly more complicated: Image two different conversations, in each of which the user is presented with an inline keyboard with the buttons yes and no.
+`per_message` is slightly more complicated: Imagine two different conversations, in each of which the user is presented with an inline keyboard with the buttons yes and no.
 The user now starts *both* conversations and sees *two* such keyboards. Now, which conversation should handle the update?
 In order to clear this issue up, if you set `per_message=True`, the `ConversationHandler` will use the `message_id` of the message with the keyboard.
 Note that this approach can only work, if all the handlers in the conversation are `CallbackQueryHandler`s. This is useful for building interactive menus.
@@ -146,7 +150,7 @@ The `callback` method you pass to `JobQueue.run_*` takes exactly *one* argument,
 
 1. Access `context.bot_data`.
 2. Pass [`{user, chat}_id`](https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.jobqueue.html#telegram.ext.JobQueue.run_once.params.chat_id) to any of the `run_*(...)` methods so you can access them in your `callback` as `context.{user, chat}_data`
-3. Use `run_*(…, context=additional_data)`. It can then be accessed within the `callback` as `context.job.context`. 
+3. Use `run_*(…, data=additional_data)`. It can then be accessed within the `callback` as `context.job.data`. 
 
 Note that `context.{user, chat}_data` will be `None`, if you don't pass the arguments `{user, chat}_id` to any of the `run_*(...)` methods.
 
@@ -165,3 +169,31 @@ message_id = message.message_id
 ```
 
 Please check the docs for details about the return value of each bot method.
+
+### How can I print a table in a Telegram message? Is it a lost cause?
+
+Long story short: yes, it's a lost cause.
+Telegram formatting doesn't support tables and even if you try to get everything aligned with whitespaces and tabs, there WILL be a client that has a different max-widths for the text bubbles or a different font/font size and everything will be messed up. 
+If it's important to you to send a nicely formatted table, send a picture or a pdf.
+
+### Can an `InlineKeyboardButton` have both a URL and `callback-data`?
+
+No, exactly *one* of the optional arguments of `InlineKeyboardButton` must be set.
+The closest that you can get to having both a URL and `callback_data` in the button is:
+
+1. have a custom server (e.g. `my.tld`) where you can creaty redirec-links on the fly - something similar to bitly or all the other link shortening services
+2. each time you want to have both a URL and a `callback_data`, create a new link `my.tld/some_token`
+    1. Make `my.tld/some_token` redirect to the actual URL
+    2. Configure your server such that it sends a notification to your bot telling it that the `my.tld/some_token` was accessed
+3. Make your bot process that information similar to how you'd process a `CallbackQuery`. See also [thes FAQ entry](#i-want-to-handle-updates-from-an-external-service-in-addition-to-the-telegram-updates-how-do-i-do-that)
+
+### Why am I suddenly getting so many log entries from `httpx`?
+
+Starting with [v.0.24.1](https://github.com/encode/httpx/releases/tag/0.24.1), `httpx` logs all async requests at `INFO` level, which may be annoying for you as a PTB user.
+
+You can explicitly set logging level for `httpx` to `WARNING` to get rid of these messages:
+```py
+import logging
+
+logging.getLogger("httpx").setLevel(logging.WARNING)
+```
