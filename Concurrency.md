@@ -103,7 +103,7 @@ while not application.update_queue.empty():
 ```
 This setting is *independent* of the `block` parameter of `Handler` and within `application.process_update` concurrency still works as explained above.
 
-You can also implement your own custom update processor by subclassing the `BaseUpdateProcessor` class:
+You can further customize concurrent handling `Application.process_update` also implement your own custom update processor by subclassing the [`BaseUpdateProcessor`](https://docs.python-telegram-bot.org/telegram.ext.baseupdateprocessor.html) interface class. Let's have a look at an example:
 ```python
 class MyUpdateProcessor(BaseUpdateProcessor):
     async def do_process_update(self, update, coroutine) -> None:
@@ -120,14 +120,17 @@ class MyUpdateProcessor(BaseUpdateProcessor):
 
 Application.builder().token('TOKEN').concurrent_updates(MyUpdateProcessor(10)).build()
 ```
-The above code processes every `callback_query` update with a delay of 5 seconds for up to 10 updates simultaneously. Psuedocode:
+The above code processes every `callback_query` update with a delay of 5 seconds for up to 10 updates simultaneously. 
+The psuedocode for this now looks something like this:
 ```python
 while not application.update_queue.empty():
   update = await application.update_queue.get()
   coroutine = application.process_update(update)
-  asyncio.create_task(do_process_update(update, coroutine))
+  asyncio.create_task(my_update_processor.do_process_update(update, coroutine))
 ```
-This is just an example of how to use the `BaseUpdateProcessor` class to handle updates in the way you want, there are endless possibilities to this. See the [documentation](https://docs.python-telegram-bot.org/en/latest/telegram.ext.baseupdateprocessor.html#telegram.ext.BaseUpdateProcessor) for more information.
+This is just an example of how to use the `BaseUpdateProcessor` class to handle updates in the way you want, there are endless possibilities to this.
+For example, you can throttle update processing for specific users or ensure that inline queries are always processed sequentially.
+See the [documentation](https://docs.python-telegram-bot.org/telegram.ext.baseupdateprocessor.html#telegram.ext.BaseUpdateProcessor) for more information.
 
 **Note:** The number of concurrently processed updates is limited (the limit defaults to 4096 updates at a time).
 This is a simple measure to avoid e.g. DDOS attacks
