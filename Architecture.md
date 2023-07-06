@@ -4,8 +4,106 @@ The `telegram` and `telegram.ext` packages contain several classes that make wri
 You have met most of them in the [[tutorial|Extensions---Your-first-Bot]].
 Because all of that can be a bit overwhelming, the below diagram gives you an overview of how the different components interact with each other.
 
-[[/assets/ptb_architecture.png]]
-[[LaTeX + TikZ source of this diagram|/assets/ptb_architecture.tex]]
+```mermaid
+flowchart TD;
+    AppBuilder("
+        <code>ext.ApplicationBuilder</code>
+        builder pattern for
+        <code>ext.ApplicationBuilder</code>
+    ");
+    App("
+        <code>ext.Application</code>
+        
+        • entry point for the whole application</li>
+        • provides convenience methods for running the whole app via run_polling/webhook()</li>
+        • administers handlers and error handlers</li>
+        • administers user/chat/bot_data</li>
+    ");
+    BaseHandler("
+        <code>ext.BaseHandler</code>
+        specifies if and how
+        it handles updates
+    ");
+    BaseRateLimiter("
+        <code>ext.BaseRateLimiter</code>
+        interface for rate limiting
+        API requests
+    ");
+    BaseRequest("
+        <code>request.BaseRequest</code>
+        interface for handling the
+        networking backend
+    ");
+    BasePersistence("
+        <code>ext.BasePersistence</code>
+        interface for persisting
+        data from <code>ext.Application</code>
+        across restarts
+    ");
+    BaseUpdateProcessor("
+        <code>ext.BaseUpdateProcessor</code>
+        interface for processing
+        updates concurrently
+    ");
+    Bot("
+        <code>(ext.Ext)Bot</code>
+        Telegram Bot API client
+        used to make requests
+        to the API
+    ");
+    CallbackContext("
+        <code>ext.CallbackContext</code>
+        Convenience class for unified
+        access to different objects within
+        handler/job/error callbacks
+    ");
+    CallbackDataCache("
+        <code>ext.CallbackDataCache</code>
+        in-memory LRU-cache for
+        arbitrary callback_data
+    ");
+    ContextTypes("
+        <code>ext.ContextTypes</code>
+        specifies types of
+        the context argument
+    ");
+    Defaults("
+        <code>ext.Defaults</code>
+        gathers default values for frequently
+        used parameters of <code>(ext.Ext)Bot</code>,
+        <code>Ext.JobQueue</code> and <code>ext.BaseHandler</code>
+    ");
+    JobQueue("
+        <code>ext.JobQueue</code>
+        schedules tasks to run
+        at specific times
+    ");
+    Updater("
+        <code>ext.Updater</code>
+        fetches updates from Telegram
+        and puts them into the update_queue
+    ");
+    
+    AppBuilder -- builds --> App;
+    App -- accesses to build <code>context</code> --> ContextTypes;
+    App -- "provides arguments for<br>handler callbacks, processes exceptions<br>raised in handler callbacks" --> BaseHandler;
+    App -- processes exceptions<br>raised in jobs --> JobQueue;
+    App -- fetches data<br>and passes it to<br><code>ext.BasePersistence</code> --> CallbackDataCache;
+    App -- fetches updates from<br>the update_queue --> Updater;
+    App -- updates in<br>regular intervals --> BasePersistence;
+    App -- gets default values<br>for parameters --> Defaults;
+    App -- dispatches updates --> BaseUpdateProcessor;
+    BaseUpdateProcessor -- processes updates<br>in specified<br>concurrency scheme--> BaseHandler;
+    ContextTypes -- specifies types --> CallbackContext;
+    BasePersistence -- holds a reference --> Bot;
+    BaseRateLimiter -- rate limits requests<br>to the API --> BaseRequest;
+    Bot -- dispatches requests<br>to the API --> BaseRateLimiter;
+    Bot -- gets default values<br>for parameters --> Defaults;
+    Bot -- stores arbitrary<br><code>callback_data</code> --> CallbackDataCache;
+    JobQueue -- accesses to<br>build <code>context</code> --> ContextTypes;
+    Updater -- calls <code>get_updates</code><br>& <code>set/delete_webhook</code> --> Bot;
+    
+```
 
 ---
 
