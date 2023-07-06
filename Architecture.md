@@ -7,12 +7,12 @@ Because all of that can be a bit overwhelming, the below diagram gives you an ov
 ```mermaid
 flowchart TD;
     AppBuilder("
-        <code>ext.ApplicationBuilder</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.applicationbuilder.html'><code>ext.ApplicationBuilder</code></a>
         builder pattern for
-        <code>ext.ApplicationBuilder</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.application.html'><code>ext.Application</code></a>
     ");
     App("
-        <code>ext.Application</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.application.html'><code>ext.Application</code></a>
         
         • entry point for the whole application</li>
         • provides convenience methods for running the whole app via run_polling/webhook()</li>
@@ -20,66 +20,66 @@ flowchart TD;
         • administers user/chat/bot_data</li>
     ");
     BaseHandler("
-        <code>ext.BaseHandler</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.basehandler.html'><code>ext.BaseHandler</code></a>
         specifies if and how
         it handles updates
     ");
     BaseRateLimiter("
-        <code>ext.BaseRateLimiter</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.baseratelimiter.html'><code>ext.BaseRateLimiter</code></a>
         interface for rate limiting
         API requests
     ");
     BaseRequest("
-        <code>request.BaseRequest</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.request.baserequest.html'><code>request.BaseRequest</code></a>
         interface for handling the
         networking backend
     ");
     BasePersistence("
-        <code>ext.BasePersistence</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.basepersistence.html'><code>ext.BasePersistence</code></a>
         interface for persisting
-        data from <code>ext.Application</code>
+        data from <a href='https://docs.python-telegram-bot.org/telegram.ext.application.html'><code>ext.Application</code></a>
         across restarts
     ");
     BaseUpdateProcessor("
-        <code>ext.BaseUpdateProcessor</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.baseupdateprocessor.html'><code>ext.BaseUpdateProcessor</code></a>
         interface for processing
         updates concurrently
     ");
     Bot("
-        <code>(ext.Ext)Bot</code>
+        <code>(<a href='https://docs.python-telegram-bot.org/telegram.ext.extbot.html'>ext.Ext</a>)<a href='https://docs.python-telegram-bot.org/telegram.bot.html'>Bot</a></code>
         Telegram Bot API client
         used to make requests
         to the API
     ");
     CallbackContext("
-        <code>ext.CallbackContext</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.callbackcontext.html'><code>ext.CallbackContext</code></a>
         Convenience class for unified
         access to different objects within
         handler/job/error callbacks
     ");
     CallbackDataCache("
-        <code>ext.CallbackDataCache</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.callbackdatacache.html'><code>ext.CallbackDataCache</code></a>
         in-memory LRU-cache for
         arbitrary callback_data
     ");
     ContextTypes("
-        <code>ext.ContextTypes</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.contexttypes.html'><code>ext.ContextTypes</code></a>
         specifies types of
         the context argument
     ");
     Defaults("
-        <code>ext.Defaults</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.defaults.html'><code>ext.Defaults</code></a>
         gathers default values for frequently
-        used parameters of <code>(ext.Ext)Bot</code>,
-        <code>Ext.JobQueue</code> and <code>ext.BaseHandler</code>
+        used parameters of <code>(<a href='https://docs.python-telegram-bot.org/telegram.ext.extbot.html'>ext.Ext</a>)<a href='https://docs.python-telegram-bot.org/telegram.bot.html'>Bot</a></code>,
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.jobqueue.html'><code>Ext.JobQueue</code></a> and <a href='https://docs.python-telegram-bot.org/telegram.ext.basehandler.html'><code>ext.BaseHandler</code></a>
     ");
     JobQueue("
-        <code>ext.JobQueue</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.jobqueue.html'><code>ext.JobQueue</code></a>
         schedules tasks to run
         at specific times
     ");
     Updater("
-        <code>ext.Updater</code>
+        <a href='https://docs.python-telegram-bot.org/telegram.ext.updater.html'><code>ext.Updater</code></a>
         fetches updates from Telegram
         and puts them into the update_queue
     ");
@@ -88,7 +88,7 @@ flowchart TD;
     App -- accesses to build <code>context</code> --> ContextTypes;
     App -- "provides arguments for<br>handler callbacks, processes exceptions<br>raised in handler callbacks" --> BaseHandler;
     App -- processes exceptions<br>raised in jobs --> JobQueue;
-    App -- fetches data<br>and passes it to<br><code>ext.BasePersistence</code> --> CallbackDataCache;
+    App -- fetches data<br>and passes it to<br><a href='https://docs.python-telegram-bot.org/telegram.ext.basepersistence.html'><code>ext.BasePersistence</code></a> --> CallbackDataCache;
     App -- fetches updates from<br>the update_queue --> Updater;
     App -- updates in<br>regular intervals --> BasePersistence;
     App -- gets default values<br>for parameters --> Defaults;
