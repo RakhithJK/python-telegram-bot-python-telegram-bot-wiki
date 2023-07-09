@@ -101,8 +101,36 @@ while not application.update_queue.empty():
   update = await application.update_queue.get()
   asyncio.create_task(application.process_update(update))
 ```
-
 This setting is *independent* of the `block` parameter of `Handler` and within `application.process_update` concurrency still works as explained above.
+
+You can further customize concurrent handling `Application.process_update` also implement your own custom update processor by subclassing the [`BaseUpdateProcessor`](https://docs.python-telegram-bot.org/telegram.ext.baseupdateprocessor.html) interface class. Let's have a look at an example:
+```python
+class MyUpdateProcessor(BaseUpdateProcessor):
+    async def do_process_update(self, update, coroutine) -> None:
+        # This method is called for every update
+        if update.callback_query:
+            await asyncio.sleep(5)
+        await coroutine
+
+    async def initialize(self) -> None:
+      pass
+
+    async def shutdown(self) -> None:
+      pass
+
+Application.builder().token('TOKEN').concurrent_updates(MyUpdateProcessor(10)).build()
+```
+The above code processes every `callback_query` update with a delay of 5 seconds for up to 10 updates simultaneously. 
+The psuedocode for this now looks something like this:
+```python
+while not application.update_queue.empty():
+  update = await application.update_queue.get()
+  coroutine = application.process_update(update)
+  asyncio.create_task(my_update_processor.do_process_update(update, coroutine))
+```
+This is just an example of how to use the `BaseUpdateProcessor` class to handle updates in the way you want, there are endless possibilities to this.
+For example, you can throttle update processing for specific users or ensure that inline queries are always processed sequentially.
+See the [documentation](https://docs.python-telegram-bot.org/telegram.ext.baseupdateprocessor.html#telegram.ext.BaseUpdateProcessor) for more information.
 
 **Note:** The number of concurrently processed updates is limited (the limit defaults to 4096 updates at a time).
 This is a simple measure to avoid e.g. DDOS attacks
@@ -123,7 +151,7 @@ Even though `asyncio` is usually single-threaded, concurrent programming comes w
 However, this wiki article does not replace ~~your psychiatrist~~ a university lecture on concurrency.
 
 Probably the biggest cause of issues of concurrency are shared states, and those issues are hard to fix.
-So instead of showing you how to fix them, we'll show you how to avoid them altogether. More about that later. 
+So instead of showing you how to fix them, we'll show you how to avoid them altogether. More about that later.
 
 **A fair warning:** In this section, we'll try to give you a simple talk (if that's possible) on a very complex topic.
 Many have written about it before, and we're certainly less qualified than most.
@@ -155,7 +183,7 @@ async def transaction(update, context):
   await bot.send_message(chat_id, 'Source account updated...')
   await bot.send_message(chat_id, 'Target account updated...')
   bank.write_account(target)
-  
+
   await bot.send_message(chat_id, 'Done!')
   bank.log(FINISHED_TRANSACTION, amount, source_id, target_id)
 
@@ -217,7 +245,7 @@ Usually, that is code that fits **at least one** of these criteria:
 3. *Modifies* local state (e.g. a variable used later in the same function)
 
 Make sure you have a good idea what *shared state* means
-Don't hesitate to do a quick Google search on it. 
+Don't hesitate to do a quick Google search on it.
 
 Let's go through our bank example line by line and note which of the criteria it matches:
 
@@ -243,7 +271,7 @@ async def transaction(update, context):
   await bot.send_message(chat_id, 'Source account updated...')  # None
   await bot.send_message(chat_id, 'Target account updated...')  # None
   bank.write_account(target)  # 1
-  
+
   await bot.send_message(chat_id, 'Done!')  # None
   bank.log(FINISHED_TRANSACTION, amount, source_id, target_id)  # None
 
@@ -262,7 +290,7 @@ As you can see, there's a pretty obvious pattern here:
 That means we can run this code asynchronously without risk.
 Therefore, the second step is to extract that code to separate functions and run only them concurrently.
 Since our async code parts are all very similar, they can be replaced by a single function.
-We could have done that before, but then this moment would've been less cool. 
+We could have done that before, but then this moment would've been less cool.
 
 ```python
 async def log_and_notify(action, amount, source_id, target_id, chat_id, message):
@@ -305,7 +333,7 @@ async def transaction(update, context):
 
   bank.write_account(source)  # 1
   bank.write_account(target)  # 1
-  
+
 
   context.application.create_task(
     log_and_notify(
