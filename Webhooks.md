@@ -128,6 +128,8 @@ server {
 }
 ```
 
+> If you try and reproduce the [custom webhook example](https://docs.python-telegram-bot.org/en/stable/examples.customwebhookbot.html) while using nginx as a reverse proxy, make sure you remove trailing slashes from the addresses in `proxy_pass` directive. A trailing slash [may cause status code 307 being emitted by Starlette](https://github.com/encode/starlette/issues/869) that is used in the example.
+
 #### Using haproxy with one subdomain per bot
 In this approach, each bot is assigned their own *subdomain*. If your server has the domain *example.com*, you could have the subdomains *bot1.example.com*, *bot2.example.com* etc. You will need one certificate for each bot, with the FQDN set for their respective subdomain (or a wildcard certificate). The reverse proxy in this example is `haproxy`. The integrated server should usually be started on the `localhost` or `127.0.0.1` address, the port can be any port you choose.
 
