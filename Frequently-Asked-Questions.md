@@ -83,7 +83,10 @@ Anything *not* listed there can not be done with bots. Here is a short list of f
 * Getting a users `user_id` via their `@username` (only userbots can do that - you may be interested in [`ptbcontrib/username_to_chat_api`](https://github.com/python-telegram-bot/ptbcontrib/tree/main/ptbcontrib/username_to_chat_api))
 
 In some cases, using a userbot can help overcome restrictions of the Bot API. Please have a look at this [article](http://telegra.ph/How-a-Userbot-superacharges-your-Telegram-Bot-07-09) about userbots.
-Note that userbots are not what python-telegram-bot is for.
+Note that userbots are *not* what python-telegram-bot is for.
+
+Please also note that some methods marked in the Telegram API (aka MTProto) are marked as "usable for bots". This does *not* necessarily mean that they can be used directly via the Bot API.
+See [this GitHub thread](https://github.com/tdlib/telegram-bot-api/issues/1#issuecomment-721873231) and [this discusson](https://github.com/tdlib/telegram-bot-api/issues/62) for more info on that.
 
 ### I'm using `ConversationHandler` and want one handler to be run multiple times. How do I do that?
 
