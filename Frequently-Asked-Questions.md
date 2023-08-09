@@ -52,6 +52,7 @@ Turning off the privacy mode has no effect for groups the bot is already in (bec
 From the official [Telegram Bot FAQ](https://core.telegram.org/bots/faq#why-doesn-39t-my-bot-see-messages-from-other-bots):
 > Bots talking to each other could potentially get stuck in unwelcome loops. To avoid this, we decided that bots will not be able to see messages from other bots regardless of mode.
 >
+Although, It is still possible to see a bot message if bot is replied to, with `reply_to_message` but you can't do any actions(forward,delete etc.) on this message.
 
 ### Can my bot delete messages from the user in a private chat?
 
