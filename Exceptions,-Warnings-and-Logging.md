@@ -60,7 +60,7 @@ For example, if you don't want to miss any deprecation warning during developmen
 
 ```python
 import warnings
-from telegram.warngings import PTBDeprecationWarning
+from telegram.warnings import PTBDeprecationWarning
 
 warnings.filterwarnings("error", category=PTBDeprecationWarning)
 ```
