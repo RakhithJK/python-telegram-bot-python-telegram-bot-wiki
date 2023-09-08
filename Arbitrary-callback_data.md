@@ -23,7 +23,7 @@ additional options to drop data:
 
 * on receiving a `CallbackQuery`, you can call `context.drop_callback_data(callback_query)`. This will delete the data associated with the keyboard attached to the message that originated the `CallbackQuery`. Calling `context.drop_callback_data` is safe in any case where you change the keyboard, i.e. `callback_query.edit_message_text/reply_markup/…`
   **Note:** If the user clicks a button more than one time fast enough, but you call `context.drop_callback_data` for the first resulting `CallbackQuery`, the second one will have `InvalidCallbackData` as `callback_data`. However, this is usually not a problem, because one only wants one button click anyway.
-* To drop more data from memory, you can call `bot.callback_data.clear_callback_queries()` or `bot.callback_data.clear_callback_data()`, which will drop the mapping of `CallbackQuery` ids to the associated UUID and the mapping of UUIDs to data, respectively. `clear_callback_data` also accepts a `time_cutoff`, allowing you to delete only entries older than a specified time.
+* To drop more data from memory, you can call `bot.callback_data_cache.clear_callback_queries()` or `bot.callback_data_cache.clear_callback_data()`, which will drop the mapping of `CallbackQuery` ids to the associated UUID and the mapping of UUIDs to data, respectively. `clear_callback_data` also accepts a `time_cutoff`, allowing you to delete only entries older than a specified time.
 
 ## Security of InlineKeyboardButtons
 
