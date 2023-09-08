@@ -16,7 +16,7 @@ This means two things for you:
 
 ## Memory Usage
 
-PTB stores the callback data objects in memory. Additionally, to that, it stores a mapping of `CallbackQuery.id` to the corresponding UUID. By default, both storages contain a maximum number of 1024 items. You can change the size by passing an integer to the `arbitrary_callback_data` argument of `Updater/ext.Bot`.
+PTB stores the callback data objects in memory. Additionally, to that, it stores a mapping of `CallbackQuery.id` to the corresponding UUID. By default, both storages contain a maximum number of 1024 items. You can change the size by passing an integer to the `arbitrary_callback_data` argument of `ApplicationBuilder`/`ExtBot`.
 
 As PTB can't know when the stored data is no longer needed, it uses an LRU (Least Recently Used) cache. This means that when the cache is full, it will drop the keyboard that has been not used for the longest time. However, if you want to keep memory usage low, you have 
 additional options to drop data:
