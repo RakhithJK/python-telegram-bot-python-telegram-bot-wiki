@@ -35,9 +35,7 @@ It is also a follow-up to the page [[Introduction to the API|Introduction-to-the
     + [Build a menu with Buttons](#build-a-menu-with-buttons)
       - [Usage](#usage-3)
     + [Telegram web login widget](#verify-data-from-telegram-web-login-widget)
-- [What to read next?](#what-to-read-next)
-
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+    + [Simple way of restarting the bot](#simple-way-of-restarting-the-bot)
 
 ## Pure API
 
@@ -560,6 +558,7 @@ This is especially useful if put inside a helper method like `get_data_buttons` 
 
 To handle the `callback_data`, you need to set a `CallbackQueryHandler`.
 
+---
 #### Verify data from [Telegram Web Login Widget](https://core.telegram.org/widgets/login). 
 
 When using a [`LoginUrl`](https://core.telegram.org/bots/api#loginurl) in an [`InlineKeyboardButton`](https://core.telegram.org/bots/api#inlinekeyboardbutton) to authorize a user on your website via Telegram, you'll have to to check the hash of the received data to verify the data of the integrity as described [here](https://core.telegram.org/widgets/login#checking-authorization)
@@ -616,3 +615,42 @@ def verify(request_data):
 </p></details>
 
 A sample of Flask app can be found [here.](https://gist.github.com/jainamoswal/279e5259a5c24f37cd44ea446c373ac4)
+
+---
+#### Simple way of restarting the bot
+
+The following example allows you to restart the bot from within a handler.
+It goes without saying that you should protect this method from access by unauthorized users - see [[here|Frequently-requested-design-patterns#how-do-i-limit-who-can-use-my-bot]] for some tips on this.
+The main magic consists of calling [`Application.stop_running`](https://docs.python-telegram-bot.org/en/stable/telegram.ext.application.html#telegram.ext.Application.stop_running) from within a handler callback to allow for a graceful shutdown.
+Actually restarting the python script can then be achieved by different means.
+
+<details><summary>Click to expand</summary><p>
+
+```python
+import os
+import sys
+
+from telegram import Update
+from telegram.ext import ContextTypes, Application, CommandHandler
+
+
+async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    context.bot_data["restart"] = True
+    context.application.stop_running()
+
+
+def main() -> None:
+    application = Application.builder().token("TOKEN").build()
+    application.bot_data["restart"] = False
+    application.add_handler(CommandHandler("restart", restart))
+    application.run_polling(allowed_updates=Update.ALL_TYPES)
+
+    if application.bot_data["restart"]:
+        os.execl(sys.executable, sys.executable, *sys.argv)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+</p></details>
