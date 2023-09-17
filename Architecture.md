@@ -166,7 +166,7 @@ For this, you'll have to implement the `BaseRequest` interface class and pass tw
 
 ## Update handlers
 
-The `Handler` interface class is the most import class when it comes to the question of how the `Application` processes updates.
+The `Handler` interface class is the most important class when it comes to the question of how the `Application` processes updates.
 PTB comes with a number of [[built-in handler|Types-of-Handlers]] which cover most important use cases.
 However, if you want to implement a custom logic of when an update should be handled, you can also write a custom implementation of `Handler` and use that.
 
