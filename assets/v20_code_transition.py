@@ -159,7 +159,7 @@ def renamed_bot_methods_transition(_: Path, contents: str) -> str:
 
 
 def rename_handler_to_base_handler(_: Path, contents: str) -> str:
-    return re.sub("(class \w+)\((telegram\.ext\.|)Handler\)", "\1\(\2BaseHandler)\)", contents)
+    return re.sub("(class \w+)\((telegram\.ext\.|)Handler\)", r"\1\(\2BaseHandler)\)", contents)
 
 
 TRANSITIONS: Sequence[Callable[[Path, str], str]] = [
