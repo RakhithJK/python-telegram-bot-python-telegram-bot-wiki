@@ -126,7 +126,7 @@ def job_pass_data_transition(_: Path, contents: str) -> str:
 
 def job_context_to_data_rename_transition(_: Path, contents: str) -> str:
     contents = re.sub(
-        r"run_(\w+)\(([\w,].*)?(context=)(\w+)([\w,].*)\)", "run_\1\(\2data=\4\5\)", contents
+        r"run_(\w+)\(([\w,].*)?(context=)(\w+)([\w,].*)\)", r"run_\1\(\2data=\4\5\)", contents
     )
     return contents.replace("context.job.context", "context.job.data")
 
