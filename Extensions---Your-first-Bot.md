@@ -1,5 +1,6 @@
-
-# ⚠️ This is the v20.x version of the wiki. For the v13.x version, please head [here](https://github.com/python-telegram-bot/v13.x-wiki/wiki).
+> **⚠️ Warning!**
+>
+> This is the v20.x version of the wiki. For the v13.x version, please [head to the v13.x wiki](https://github.com/python-telegram-bot/v13.x-wiki/wiki).
 
 ## Introduction
 The `telegram.ext` submodule is built on top of the pure API implementation. It provides an easy-to-use interface and takes some work off the programmer, so you [don't have to repeat yourself](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
