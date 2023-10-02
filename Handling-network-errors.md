@@ -36,7 +36,7 @@ Once you've understood the usage pattern of your bot (that includes the QoS) you
 ## Tweaking PTB
 ### Networking backend tweaks
 
-PTB performs HTTPS requests using through the `telegram.request.BaseRequest` interface.
+PTB performs HTTPS requests using the `telegram.request.BaseRequest` interface.
 The method `BaseRequest.do_request` accepts four parameters for controlling timeouts:
 
 * `read_timeout` specifies the maximum amount of time (in seconds) to wait for a response from Telegram’s server
