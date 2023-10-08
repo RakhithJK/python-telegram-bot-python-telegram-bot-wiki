@@ -99,7 +99,7 @@ To restrict your bot to a set of users or if you don't want it to be available f
 SPECIAL_USERS = [127376448, 172380183, 1827979793]  # Allows users
 
 async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.effective_user.user_id in SPECIAL_USERS:
+    if update.effective_user.id in SPECIAL_USERS:
         pass
     else:
         await update.effective_message.reply_text("Hey! You are not allowed to use me!")
