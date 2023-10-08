@@ -106,7 +106,7 @@ async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         raise ApplicationHandlerStop
 ```
 
-Here, it should be noted that this approach blocks your bot entirely for a set of users. If all you need is to block a specific functionality, like a special command or privilege, then it will be wise to use [filters.Chat](https://python-telegram-bot.readthedocs.io/telegram.ext.filters.html#telegram.ext.filters.Chat), [filters.User](https://python-telegram-bot.readthedocs.io/telegram.ext.filters.html#telegram.ext.filters.user).
+Here, it should be noted that this approach blocks your bot entirely for a set of users. If all you need is to block a specific functionality, like a special command or privilege, then it will be wise to use [filters.Chat](https://python-telegram-bot.readthedocs.io/telegram.ext.filters.html#telegram.ext.filters.Chat), [filters.User](https://python-telegram-bot.readthedocs.io/telegram.ext.filters.html#telegram.ext.filters.User).
 Don't forget that you can also use [decorators](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#restrict-access-to-a-handler-decorator) or a simple `if-else` check.
 If you want a more streamlined style of managing permissions (like superuser, admin, users) then [ptbcontrib/roles](https://github.com/python-telegram-bot/ptbcontrib/tree/main/ptbcontrib/roles) is worth checking out.
 
