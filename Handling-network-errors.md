@@ -78,9 +78,7 @@ Please take in mind that too short polling intervals may have undesirable side e
 
 ### Socket options
 Depending on your OS you may be able to set socket options to perform low level tweaks.
-At the moment, PTB is not setting any socket options.
-
-A contribution in this direction would be greatly appreciated.
+In the default networking backend, [`HTTPXRequest`](https://docs.python-telegram-bot.org/telegram.request.httpxrequest.html), there is a corresponding parameter for this.
 
 ## Stabilizing your app
 
