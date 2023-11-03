@@ -135,7 +135,7 @@ From now on, your bot should echo all non-command messages it receives.
 
 **Note:** The `filters` module contains a number of so-called filters that filter incoming messages for text, images, status updates and more. Any message that returns `True` for at least one of the filters passed to `MessageHandler` will be accepted. You can also write your own filters if you want. See more in [[Advanced Filters|Extensions---Advanced-Filters]].
 
-Let's add some actual functionality to your bot. We want to implement a `/caps` command that will take some text as an argument (e.g. `/caps argument`) and reply to it in CAPS. To make things easy, you can receive the arguments (as a `list`, split on spaces) that were passed to a command in the callback function:
+Let's add some actual functionality to your bot. We want to implement a `/caps` command that will take some text as an argument (e.g. `/caps argument`) and reply to it in CAPS. To make things easy, you will receive the arguments (as a `list`, split on spaces) that were passed to a command in the callback function:
 
 ```python
 async def caps(update: Update, context: ContextTypes.DEFAULT_TYPE):
