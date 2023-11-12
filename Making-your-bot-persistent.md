@@ -44,7 +44,6 @@ These 3rd party packages contain persistence classes (the list is incomplete):
 To make your bot persistent you need to do the following.
 
 - Create a persistence object (e.g. `my_persistence = PicklePersistence(filepath='my_file')`)
-- If you intend not to save all of `{bot,chat,user,callback}_data` then before creating a persistence object, create a persistenceinput object with the data you do not need saved set to `False` (default is `True`) and pass the persistenceinput object as the value to `store_data` parameter (e.g. `persistence_input = PersistenceInput(chat_data=False, callback_data=False, user_data=False)` and then `my_persistence = PicklePersistence(filepath='my_file', store_data=persistence_input)`)
 - Construct `Application` with the persistence (`Application.builder().token('TOKEN').persistence(persistence=my_persistence).build()`).
 
 This is enough to make `user_data`, `bot_data`, `chat_data` and `ExtBot.callback_data_cache` persistent.
@@ -54,6 +53,8 @@ Adding these arguments and adding the conversation handler to a persistence-awar
 
 When starting the `Application` with `Application.start()` or `Application.run_{polling, webhook}`, it will loads the data from the persistence on startup and automatically update the persistence in regular intervals.
 You can customize the interval via the [`update_interval`](https://python-telegram-bot.readthedocs.io/telegram.ext.basepersistence.html#telegram.ext.BasePersistence.params.update_interval) argument of `Base/Pickle/Dict/…Persistence`.
+
+You can also selectively store only some of `{bot,chat,user,callback}_data` by passing a `PersistenceInput` to the `store_data` argument your persistence class.
 
 ### ⚠️ Note
 
