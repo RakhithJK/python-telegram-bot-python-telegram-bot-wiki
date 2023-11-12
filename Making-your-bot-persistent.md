@@ -44,6 +44,7 @@ These 3rd party packages contain persistence classes (the list is incomplete):
 To make your bot persistent you need to do the following.
 
 - Create a persistence object (e.g. `my_persistence = PicklePersistence(filepath='my_file')`)
+- If you intend not to save all of `{bot,chat,user,callback}_data` then before creating a persistence object, create a persistenceinput object with the data you do not need saved set to `False` (default is `True`) and pass the persistenceinput object as the value to `store_data` parameter (e.g. `persistence_input = PersistenceInput(chat_data=False, callback_data=False, user_data=False)` and then `my_persistence = PicklePersistence(filepath='my_file', store_data=persistence_input)`)
 - Construct `Application` with the persistence (`Application.builder().token('TOKEN').persistence(persistence=my_persistence).build()`).
 
 This is enough to make `user_data`, `bot_data`, `chat_data` and `ExtBot.callback_data_cache` persistent.
