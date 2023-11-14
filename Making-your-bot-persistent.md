@@ -17,7 +17,7 @@ In V12.0b1 we added a persistence mechanism to `telegram.ext`. This wiki page is
 
 * `Job`'s and the `job_queue` is not supported.
 However, the current `JobQueue` backend [APScheduler](https://apscheduler.readthedocs.io/) has its own persistence logic that you can leverage.
-See e.g. [`ptbcontrib/ptb_sqlalchemy_jobstore`](https://github.com/python-telegram-bot/ptbcontrib/tree/main/ptbcontrib/ptb_sqlalchemy_jobstore)
+See e.g. [`ptbcontrib/ptb_sqlalchemy_jobstore`](https://github.com/python-telegram-bot/ptbcontrib/tree/main/ptbcontrib/ptb_jobstores)
 * For a special note about `Bot` instances, see [below](#storing-bots)
 
 ## Included persistence classes
