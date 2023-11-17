@@ -53,7 +53,6 @@ When in doubt, please check the official PTB resources.
 
 
 ### Low budget
-* [i-83](https://i-83.net/)
 * [OVH](https://www.ovh.com/us/vps/) 
 * [Uberspace](https://uberspace.de/)
 
