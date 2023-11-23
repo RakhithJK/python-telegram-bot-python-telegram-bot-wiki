@@ -20,4 +20,5 @@ Please try to keep this page up-to-date.
 | [flexget](https://github.com/Flexget/Flexget)| Use telegram as a notifier | 3.4 | Stable
 | [ptb-django-cookiecutter](https://github.com/lugodev/ptb-django-cookiecutter)| A simple cookiecutter to create Python Telegram bots, wrapped with Django. | 0.1.0 | Beta |
 | [ptb-menu-pagination](https://github.com/SergSm/ptb-menu-pagination) | Makes a google style pagination line for a list of items. | >=13.8.1 | Alpha |
+| [ptb-pagination](https://github.com/wiltonsr/ptb-pagination) | Python inline keyboard pagination for Telegram Bot API. | >=13.6 | Alpha |
 [Video Tutorial](https://youtu.be/fQo_327-AZA) | How to create a simple Telegram bot using PTB and then hosting it on Heroku|13.7|-|
