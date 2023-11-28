@@ -1,6 +1,6 @@
 # How to write a Minimal Working Example
 
-If you read this, you probably were asked to provide a minimal working example (MWE) in the [user group](https://t.me/pythontelegrambotgroup) or the [issue tracker](https://github.com/python-telegram-bot/python-telegram-bot/issues) of the [python-telgeram-bot](https://python-telegram-bot.org) library.
+If you read this, you probably were asked to provide a minimal working example (MWE) in the [user group](https://t.me/pythontelegrambotgroup) or the [issue tracker](https://github.com/python-telegram-bot/python-telegram-bot/issues) of the [python-telegram-bot](https://python-telegram-bot.org) library.
 
 So here is what that means:
 
