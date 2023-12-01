@@ -22,7 +22,7 @@ proxy_url = 'http://USERNAME:PASSWORD@PROXY_HOST:PROXY_PORT'  # can also be a ht
 app = ApplicationBuilder().token("TOKEN").proxy(proxy_url).get_updates_proxy(proxy_url).build()
 ```
 
-In the last line, we setup the proxy such that it'll be used both for making requests to the Bot API like  `Bot.send_message` ([`proxy_url()`](https://python-telegram-bot.readthedocs.io/telegram.ext.applicationbuilder.html#telegram.ext.ApplicationBuilder.proxy_url)) and for fetching updates from Telegram ([`get_updates_proxy_url`](https://python-telegram-bot.readthedocs.io/telegram.ext.applicationbuilder.html#telegram.ext.ApplicationBuilder.get_updates_proxy_url)). It is not necessary to setup a proxy for both, you can do it for either of them.
+In the last line, we setup the proxy such that it'll be used both for making requests to the Bot API like  `Bot.send_message` ([`proxy()`](https://docs.python-telegram-bot.org/en/v20.7/telegram.ext.applicationbuilder.html#telegram.ext.ApplicationBuilder.proxy)) and for fetching updates from Telegram ([`get_updates_proxy`](https://docs.python-telegram-bot.org/en/v20.7/telegram.ext.applicationbuilder.html#telegram.ext.ApplicationBuilder.get_updates_proxy)). It is not necessary to setup a proxy for both, you can do it for either of them.
 
 # Working Behind a Socks5 Server
 This configuration is supported, but requires an optional/extra python package.
