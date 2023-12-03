@@ -8,7 +8,7 @@ _Disclaimer: We will conveniently ignore the imports._
 if __name__ == '__main__':
     main()
 ```
-[Lines 78 to 79](../blob/master/examples/inlinekeyboard.py#L78-L79) tell python that after starting the script, it's supposed to call the main function
+[Lines 68 to 69](../blob/master/examples/inlinekeyboard.py#L78-L79) tell python that after starting the script, it's supposed to call the main function
 ## main
 
 ```python
