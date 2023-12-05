@@ -43,7 +43,7 @@ async def process_update(self, update):
             if handler.check_update(update):
                 # Here we `await`, i.e. we only continue after the callback is done!
                 await handler.handle_update(update)
-                continue  # at most one handler per group handles the update
+                break  # at most one handler per group handles the update
 ```
 
 ## Using concurrency
@@ -77,7 +77,7 @@ async def process_update(self, update):
             if handler.check_update(update):
                 # Here we *don't* `await`, such that the loop immediately continues
                 asyncio.create_task(handler.handle_update(update))
-                continue  # at most one handler per group handles the update
+                break  # at most one handler per group handles the update
 ```
 
 This already helps for many use cases.
