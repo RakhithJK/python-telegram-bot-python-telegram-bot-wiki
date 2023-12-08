@@ -5,17 +5,16 @@ Bots built using the `telegram.ext.Application` class (>=v20):
 
 | Name | Description | PTB version | Year Updated | Try it Out | 
 | --- | --- | --- | --- | --- |
+| [Akinator-Bot](https://github.com/adenosinetp10/Akinator-Bot) | Play guessing game Akinator on Telegram. | 20.6 | 2023 |  [Link](https://t.me/Akinatorq_bot) | 
 | [Engeybot](https://github.com/fauzaanu/engeybot) | A telegram bot that uses OPENAI Completions end point to give answers for questions along with a text to speech answer as audio file | 20.1 | 2023 | [@Engeybot](https://t.me/engeybot) |
 | [Feederbot](https://github.com/Dextroz/RSS_Feederbot) | A Telegram bot for reading RSS feeds. | 20.0a0 | 2022 | - |
 | [ForwardsCoverBot](https://github.com/91DarioDev/ForwardsCoverBot) | Echoes any message and any kind of media to anonymize the forward. | 20.0 | 2023 | [Link](https://t.me/forwardscoverbot) |
 | [GuardianVPN](https://github.com/mearashadowfax/GuardianVPN) | A Telegram bot that simplifies VPN configuration by providing users with configuration files on-demand | 20.1 | 2023 | [@GuardianVPNBot](https://t.me/GuardianVPNBot) |
+| [Instagram Assistant](https://github.com/rzashakeri/Instagram-Assistant) | Instagram Assistant on Telegram with download, upload and Lottery and Insights 💡 | 20.1 | 2023 | [Link](https://t.me/InstagramAssistantRobot) |
 | [Shorts To Telegram](https://github.com/fauzaanu/Shorts_To_Telegram) | On receiving a YouTube Shorts Link this bot will send you back a telegram video | >=20.0a0 | 2022 | [Link](https://t.me/ShortsInTGBot) |
 | [Tiktok To Telegram](https://github.com/fauzaanu/Tiktok_To_Telegram) | On receiving a tiktok link this bot will send you back a watermark removed video back | 20.0a4 | 2022 | [Link](https://t.me/TokInTgBot) |
 | [Torrent Telegram Bot](https://github.com/fauzaanu/torrent_telegram_bot) | A bot that generates direct links from torrent magnet links, along with searching torrents from a search query | Unknown | 2022 | - |
 | [Twitter Status Bot](https://github.com/Bibo-Joshi/twitter-status-bot) | A simple Telegram Bot that let’s you create stickers looking like Tweets on the fly. | 20.1 | 2023 | [Link](https://t.me/TwitterStatusBot) |
-| [python-telegram-bot-template](https://github.com/Lur1an/python-telegram-bot-template) | A template for a python-telegram-bot application, inlcudes MongoDB persistence, barebone user module, application-state handling and some decorators and utility classes | 20.0a0 | 2023 | - |
-| [Instagram Assistant](https://github.com/rzashakeri/Instagram-Assistant) | Instagram Assistant on Telegram with download, upload and Lottery and Insights 💡 | 20.1 | 2023 | [Link](https://t.me/InstagramAssistantRobot) |
-| [Akinator-Bot](https://github.com/adenosinetp10/Akinator-Bot) | Play guessing game Akinator on Telegram. | 20.6 | 2023 |  [Link](https://t.me/Akinatorq_bot) | 
 
 # Web Apps (v20+)
 Bots using Telegram Web Apps (>=v20):
