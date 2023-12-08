@@ -15,6 +15,7 @@ Bots built using the `telegram.ext.Application` class (>=v20):
 | [Twitter Status Bot](https://github.com/Bibo-Joshi/twitter-status-bot) | A simple Telegram Bot that let’s you create stickers looking like Tweets on the fly. | 20.1 | 2023 | [Link](https://t.me/TwitterStatusBot) |
 | [python-telegram-bot-template](https://github.com/Lur1an/python-telegram-bot-template) | A template for a python-telegram-bot application, inlcudes MongoDB persistence, barebone user module, application-state handling and some decorators and utility classes | 20.0a0 | 2023 | - |
 | [Instagram Assistant](https://github.com/rzashakeri/Instagram-Assistant) | Instagram Assistant on Telegram with download, upload and Lottery and Insights 💡 | 20.1 | 2023 | [Link](https://t.me/InstagramAssistantRobot) |
+| [Akinator-Bot](https://github.com/adenosinetp10/Akinator-Bot) | Play guessing game Akinator on Telegram. | 20.6 | 2023 |  [Link](https://t.me/Akinatorq_bot) | 
 
 # Web Apps (v20+)
 Bots using Telegram Web Apps (>=v20):
@@ -35,7 +36,6 @@ Bots built using the `telegram.ext.Updater` class (<=v20):
 
 | Name | Description | PTB version | Year Updated | Try it Out | 
 | --- | --- | --- | --- | --- |
-| [Akinator-Bot](https://github.com/adenosinetp10/Akinator-Bot) | Play guessing game Akinator on Telegram. | 13.13 | 2023 |  [Link](https://t.me/aki_akinator_bot) | 
 | [AlarmBot](https://github.com/guysoft/AlarmBot) | This bot uses [crontab](https://en.wikipedia.org/wiki/Cron) to schedule audio alarms. The alarm command can be edited to schedule any kind of cron job for an IOT device. | >7.0.1 | 2019 | [Link](https://t.me/alarmbot)
 | [AmbroBot](https://github.com/Ambro17/AmbroBot) | This bot can search series or movies by name and lets you download them, it can also list latest yts movies, lets you set reminders, solve linear equations and a few other neat things | 11.0.0 | 2023 | [Link](https://t.me/CuervoBot) | 
 | [aws-lambda-telegram-bot](https://github.com/aprezcuba24/aws-lambda-telegram-bot) | This repository is a base project to create telegram bots. In the project, you can create a bot using **AWS Lambda** and the data will be stored in **dynamodb** | 13.11 | 2022 | - |
