@@ -181,8 +181,8 @@ Even if you have all the IDs, you can't know if a user has blocked your bot in t
 
 Finally, note that Telegram imposes some limits that restrict you to send ~30 Messages per second. If you have a huge user base and try to notify them all at once, you will get flooding errors. To prevent that, try spreading the messages over a long time range. To achieve that you can use e.g.
 
-* the [`JobQueue`](../wiki/Extensions---JobQueue)
-* PTBs mechanism to [avoid flood limits](../wiki/Avoiding-flood-limits)
+* the [`JobQueue`](../Extensions---JobQueue)
+* PTBs mechanism to [avoid flood limits](../Avoiding-flood-limits)
 
 ## How do I deal with a media group?
 
@@ -212,7 +212,7 @@ The idea behind this approach is to start a upload segment in your code. Either 
 
 ## Running PTB alongside other `asyncio` frameworks
 
-The [tutorial](../Extensions---Your-first-Bot) as well (almost) all the [examples](https://docs.python-telegram-bot.org/examples.html#examples-chatmemberbot) make use of [`Application.run_polling`](https://docs.python-telegram-bot.org/telegram.ext.application.html#telegram.ext.Application.run_polling).
+The [Tutorial: Your first Bot](../Extensions---Your-first-Bot) as well (almost) all the [examples](https://docs.python-telegram-bot.org/examples.html#examples-chatmemberbot) make use of [`Application.run_polling`](https://docs.python-telegram-bot.org/telegram.ext.application.html#telegram.ext.Application.run_polling).
 This method is blocking, which means that no other `asyncio` related code can be started while it is running.
 This is okay as long your Python script runs only your bot.
 However, if you want to run multiple bots in the same Python script or other `asyncio` frameworks (e.g. a webserver) alongside your bot, this becomes an issue.
