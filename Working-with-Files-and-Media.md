@@ -22,8 +22,7 @@ Please also check out the [official Telegram API docs](https://core.telegram.org
 
 Let's have a look at how sending a document can be done. In these examples, we'll be using `Bot`'s [`send_document()`](https://python-telegram-bot.readthedocs.io/telegram.bot.html#telegram.Bot.send_document) method.
 
-> **Note:**
->
+> [!NOTE]
 > In discussion and examples below, we will be using methods of `Bot`, but most of them
 > (including [`send_document()`](https://python-telegram-bot.readthedocs.io/telegram.bot.html#telegram.Bot.send_document)) 
 > have shortcut methods in classes like `User`, `Chat` or `Message` that can be more 
@@ -83,7 +82,8 @@ media_1 = InputMediaDocument(media='https://python-telegram-bot.org/static/testf
 media_1 = InputMediaDocument(media=file_id, ...)
 ```
 
-> Note that for the `InputMedia*` classes, passing a file path only works if your bot is running in [local mode](docs.python-telegram-bot.org/telegram.bot.html#telegram.Bot.params.local_mode).
+> [!CAUTION]
+> For the `InputMedia*` classes, passing a file path only works if your bot is running in [local mode](docs.python-telegram-bot.org/telegram.bot.html#telegram.Bot.params.local_mode).
 
 ### Sending files via inline mode
 

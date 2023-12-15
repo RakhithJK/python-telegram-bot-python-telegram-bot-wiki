@@ -87,7 +87,7 @@ In some cases, using a userbot can help overcome restrictions of the Bot API. Pl
 Note that userbots are *not* what python-telegram-bot is for.
 
 Please also note that some methods marked in the Telegram API (aka MTProto) are marked as "usable for bots". This does *not* necessarily mean that they can be used directly via the Bot API.
-See [this GitHub thread](https://github.com/tdlib/telegram-bot-api/issues/1#issuecomment-721873231) and [this discusson](https://github.com/tdlib/telegram-bot-api/issues/62) for more info on that.
+See [this GitHub thread](https://github.com/tdlib/telegram-bot-api/issues/1#issuecomment-721873231) and [this discussion](https://github.com/tdlib/telegram-bot-api/issues/62) for more info on that.
 
 ### I'm using `ConversationHandler` and want one handler to be run multiple times. How do I do that?
 
@@ -107,11 +107,12 @@ If your third-party service requires some other setup for fetching updates, that
 
 ### Why am I getting `ImportError: cannot import name 'XY' from 'telegram'`?
 
-There are two common reasons for this kind of exception:
+There are three common reasons for this kind of exception:
 
 1. You installed `pip install telegram` instead of `pip install python-telegram-bot`. Run `pip uninstall telegram` to uninstall the [telegram library](https://pypi.org/project/telegram/) and then run `pip install python-telegram-bot` again.
 2. You have a file named `telegram.py` or a directory/module named `telegram` in your working directory. This leads to namespace issues.
 Rename them to something else.
+3. You have misconfigured your python path/environment. Please check that the location listed in `pip show python-telegram-bot` is in your [`PYTHONPATH`](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH), or your [`sys.path`](https://docs.python.org/3/library/sys.html#sys.path). If not, then you may for e.g. append it to `PYTHONPATH` with `export PYTHONPATH=$PYTHONPATH:/path/to/python-telegram-bot`, or append it to `sys.path` with `sys.path.append('/path/to/python-telegram-bot')`.
 
 ### What do the `per_*` settings in `ConversationHandler` do?
 
