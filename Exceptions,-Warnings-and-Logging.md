@@ -10,7 +10,10 @@ The good news is that exceptions that are handled by the error handlers don't st
 
 **Example:** You're trying to send a message, but the user blocked the bot. An `Forbidden` exception, a subclass of `TelegramError`, will be raised and delivered to your error handler, so you can delete it from your conversation list, if you keep one.
 
-**Note:** The error handler might be only your last resort - of course you can also handle exceptions as they occur. Only uncaught exceptions are forwarded to the error handler.
+> [!NOTE]
+>  The error handler might be only your last resort - of course you can also handle exceptions as they occur. Only uncaught exceptions are forwarded to the error handler.
+
+Other common approaches for more fine-grained error handling are using `try-except` in crucial places or by implementing a custom retry-mechanism by subclassing [`BaseRequest`](https://docs.python-telegram-bot.org/en/stable/telegram.request.baserequest.html) or [`HTTPXRequest`](https://docs.python-telegram-bot.org/en/stable/telegram.request.httpxrequest.html).
 
 ## Example
 
