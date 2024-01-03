@@ -5,7 +5,7 @@ Bots built using the `telegram.ext.Application` class (>=v20):
 
 | Name | Description | PTB version | Year Updated | Try it Out | 
 | --- | --- | --- | --- | --- |
-| [Akinator-Bot](https://github.com/adenosinetp10/Akinator-Bot) | Play guessing game Akinator on Telegram. | 20.6 | 2023 |  [Link](https://t.me/Akinatorq_bot) | 
+| [Akinator-Bot](https://github.com/codewarnab/akinatorbot) | Play guessing game Akinator on Telegram. | 20.6 | 2023 |  [Link](https://t.me/Akinatorq_bot) | 
 | [Engeybot](https://github.com/fauzaanu/engeybot) | A telegram bot that uses OPENAI Completions end point to give answers for questions along with a text to speech answer as audio file | 20.1 | 2023 | [@Engeybot](https://t.me/engeybot) |
 | [Feederbot](https://github.com/Dextroz/RSS_Feederbot) | A Telegram bot for reading RSS feeds. | 20.0a0 | 2022 | - |
 | [ForwardsCoverBot](https://github.com/91DarioDev/ForwardsCoverBot) | Echoes any message and any kind of media to anonymize the forward. | 20.0 | 2023 | [Link](https://t.me/forwardscoverbot) |
