@@ -103,7 +103,7 @@ application.run_webhook(
     port=5000,
     url_path='1',
     secret_token='ASecretTokenIHaveChangedByNow',
-    webhook_url='https://example.com/TOKEN1',
+    webhook_url='https://example.com/1',
     cert='cert.pem'
 )
 ```
