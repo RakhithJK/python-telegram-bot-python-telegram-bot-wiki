@@ -53,7 +53,6 @@ When in doubt, please check the official PTB resources.
 
 
 ### Low budget
-* [i-83](https://i-83.net/)
 * [OVH](https://www.ovh.com/us/vps/) 
 * [Uberspace](https://uberspace.de/)
 
@@ -62,7 +61,7 @@ When in doubt, please check the official PTB resources.
     * **[How to create a Bot on Codenvy](https://github.com/p92camcj/Tutorial-telegram-bot)** by [p92camcj](https://github.com/p92camcj/Tutorial-telegram-bot)
 * [Koding](https://koding.com/)
 * [Cloud9](https://c9.io/)
-* [Repl.it](https://repl.it/)
+* [Replit](https://replit.com/)
 * [Glitch](https://glitch.com/)
 
 ### Tunnels

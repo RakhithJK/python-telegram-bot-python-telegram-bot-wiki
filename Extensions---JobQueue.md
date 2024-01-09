@@ -13,9 +13,12 @@ The extension class [`telegram.ext.JobQueue`](https://docs.python-telegram-bot.o
 In addition to the tutorial below, there is also the `timerbot.py` example at the [examples directory](https://github.com/python-telegram-bot/python-telegram-bot/tree/master/examples).
 
 # Usage
-> :warning: Since v20, you must install PTB with the optional requirement `job-queue`, i.e. 
+> [!WARNING] 
+> Since v20, you must install PTB with the optional requirement `job-queue`, i.e. 
 >
-> `pip install 'python-telegram-bot[job-queue]'`
+> ```sh
+> pip install 'python-telegram-bot[job-queue]'
+> ```
 
 The `JobQueue` class is tightly integrated with other `telegram.ext` classes.
 
@@ -83,7 +86,8 @@ job_minute.enabled = False  # Temporarily disable this job
 job_minute.schedule_removal()  # Remove this job completely
 ```
 
-**Note:** [`schedule_removal`](https://python-telegram-bot.readthedocs.io/telegram.ext.job.html#telegram.ext.Job.schedule_removal) does not immediately remove the job from the queue. Instead, it is marked for removal and will be removed as soon as its current interval is over (it will not run again after being marked for removal).
+> [!CAUTION]
+> [`schedule_removal`](https://python-telegram-bot.readthedocs.io/telegram.ext.job.html#telegram.ext.Job.schedule_removal) does not immediately remove the job from the queue. Instead, it is marked for removal and will be removed as soon as its current interval is over (it will not run again after being marked for removal).
 
 You might want to add jobs in response to certain user input, and there is a convenient way to do that. The `context` argument of your `Handler` callbacks has the `JobQueue` attached as `context.job_queue` ready to be used. Another feature you can use here are the [`data`](https://python-telegram-bot.readthedocs.io/telegram.ext.job.html#telegram.ext.Job.params.data), [`chat_id`](https://python-telegram-bot.readthedocs.io/telegram.ext.job.html#telegram.ext.Job.params.chat_id) or [`user_id`](https://python-telegram-bot.readthedocs.io/telegram.ext.job.html#telegram.ext.Job.params.user_id) keyword arguments of `Job`. You can pass any object as a `data` parameter when you launch a `Job` and retrieve it at a later stage as long as the `Job` exists. The `chat_id`/`user_id` parameter allows for an easy way to let the `Job` know which chat we're talking about. This way, we can access `context.chat_data`/`context.user_data` in the job's `callback`. Let's see how it looks in code:
 

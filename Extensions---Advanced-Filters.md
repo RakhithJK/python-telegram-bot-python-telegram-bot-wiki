@@ -75,7 +75,8 @@ You may have noticed that when using [`filters.Regex`](https://python-telegram-b
 1. Set `self.data_filter=True` for your filter.
 2. If the update should be handled, return a dictionary of the form `{attribute_name: [values]}`. This dict will be merged with the internal dict of the `context` argument making `value` available as `context.attribute_name`. This currently works with `MessageHandler`, `CommandHandler` and `PrefixHandler`, which are the only handlers that accept filters.
 
-   **Note:** The values of the returned dict must be *lists*. This is necessary to make sure that multiple data filters can be merged meaningfully.
+> [!IMPORTANT] 
+> The values of the returned dict must be *lists*. This is necessary to make sure that multiple data filters can be merged meaningfully.
 
 If you want this to work with your custom handler, make sure that `YourHandler.collect_additional_context` does something like
 

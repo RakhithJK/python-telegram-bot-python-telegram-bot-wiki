@@ -15,7 +15,7 @@ PTB offers different resources that help you understand and use the features of 
 -   Our [examples directory][] contains several examples that showcase
     the different features of both the Bot API and
     `python-telegram-bot`. Even if it is not your approach for learning,
-    please take a look at `echobot.py`. It is the de facto base for most
+    please take a look at [`echobot.py`](https://docs.python-telegram-bot.org/en/stable/examples.echobot.html). It is the de facto base for most
     of the bots out there. The code for these examples is released to
     the public domain, so you can start by grabbing the code and
     building on top of it.

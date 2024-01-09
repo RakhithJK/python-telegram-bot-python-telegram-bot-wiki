@@ -19,7 +19,7 @@ This page is a collection of sorts, dedicated to showcase design patterns we get
 ## Requirements
 
 Knowing how to make bots with PTB is enough. That means you should be familiar with Python and with PTB.
-If you haven't worked on anything with PTB, then please check [Introduction to the API](../Introduction-to-the-API) as well as the [Tutorial: Your first Bot](../Extensions---Your-first-Bot).
+If you haven't worked on anything with PTB, then please check [Introduction to the API](../Introduction-to-the-API) as well as the [Tutorial: Your first Bot](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Extensions---Your-first-Bot).
 
 ## How to handle updates in several handlers
 
@@ -99,14 +99,14 @@ To restrict your bot to a set of users or if you don't want it to be available f
 SPECIAL_USERS = [127376448, 172380183, 1827979793]  # Allows users
 
 async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.effective_user.user_id in SPECIAL_USERS:
+    if update.effective_user.id in SPECIAL_USERS:
         pass
     else:
         await update.effective_message.reply_text("Hey! You are not allowed to use me!")
         raise ApplicationHandlerStop
 ```
 
-Here, it should be noted that this approach blocks your bot entirely for a set of users. If all you need is to block a specific functionality, like a special command or privilege, then it will be wise to use [filters.Chat](https://python-telegram-bot.readthedocs.io/telegram.ext.filters.html#telegram.ext.filters.Chat), [filters.User](https://python-telegram-bot.readthedocs.io/telegram.ext.filters.html#telegram.ext.filters.user).
+Here, it should be noted that this approach blocks your bot entirely for a set of users. If all you need is to block a specific functionality, like a special command or privilege, then it will be wise to use [filters.Chat](https://python-telegram-bot.readthedocs.io/telegram.ext.filters.html#telegram.ext.filters.Chat), [filters.User](https://python-telegram-bot.readthedocs.io/telegram.ext.filters.html#telegram.ext.filters.User).
 Don't forget that you can also use [decorators](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#restrict-access-to-a-handler-decorator) or a simple `if-else` check.
 If you want a more streamlined style of managing permissions (like superuser, admin, users) then [ptbcontrib/roles](https://github.com/python-telegram-bot/ptbcontrib/tree/main/ptbcontrib/roles) is worth checking out.
 
@@ -181,8 +181,8 @@ Even if you have all the IDs, you can't know if a user has blocked your bot in t
 
 Finally, note that Telegram imposes some limits that restrict you to send ~30 Messages per second. If you have a huge user base and try to notify them all at once, you will get flooding errors. To prevent that, try spreading the messages over a long time range. To achieve that you can use e.g.
 
-* the [`JobQueue`](../wiki/Extensions---JobQueue)
-* PTBs mechanism to [avoid flood limits](../wiki/Avoiding-flood-limits)
+* the [`JobQueue`](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Extensions---JobQueue)
+* PTBs mechanism to [avoid flood limits](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Avoiding-flood-limits)
 
 ## How do I deal with a media group?
 
@@ -191,6 +191,8 @@ The basic problem behind this question is simple. For the end user, it looks lik
 This basic problem has two basic approaches for handling it, without requiring a more elaborate setup involving databases.
 
 ### Timer based approach
+
+⚠️ This code was written for the v13.x version. Refer to the [transition guide](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Transition-guide-to-Version-20.0) before using it.
 
 [Real life code example.](https://github.com/Poolitzer/channelforwarder/blob/589104b8a808199ba46d620736bd8bea1dc187d9/main.py#L19-L46)
 
@@ -212,7 +214,7 @@ The idea behind this approach is to start a upload segment in your code. Either 
 
 ## Running PTB alongside other `asyncio` frameworks
 
-The [tutorial](../Extensions---Your-first-Bot) as well (almost) all the [examples](https://docs.python-telegram-bot.org/examples.html#examples-chatmemberbot) make use of [`Application.run_polling`](https://docs.python-telegram-bot.org/telegram.ext.application.html#telegram.ext.Application.run_polling).
+The [tutorial](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Extensions---Your-first-Bot) as well (almost) all the [examples](https://docs.python-telegram-bot.org/examples.html#examples-chatmemberbot) make use of [`Application.run_polling`](https://docs.python-telegram-bot.org/telegram.ext.application.html#telegram.ext.Application.run_polling).
 This method is blocking, which means that no other `asyncio` related code can be started while it is running.
 This is okay as long your Python script runs only your bot.
 However, if you want to run multiple bots in the same Python script or other `asyncio` frameworks (e.g. a webserver) alongside your bot, this becomes an issue.

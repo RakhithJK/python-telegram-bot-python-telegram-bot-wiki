@@ -11,7 +11,7 @@
 
 > ⚠️ Please make sure to read this page in its entirety and in particular the section on [tailor-made concurrency](#tailor-made-concurrency)
 
-PTB is build on top of Pythons [`asyncio`](https://docs.python.org/3/library/asyncio.html), which allows writing concurrent code using the `async`/`await` syntax.
+PTB is built on top of Python's [`asyncio`](https://docs.python.org/3/library/asyncio.html), which allows writing concurrent code using the `async`/`await` syntax.
 This greatly helps to design code that efficiently uses the wait time during I/O operations like network communication (e.g. sending a message to a user) or reading/writing on the hard drive.
 
 **Note:**
@@ -43,13 +43,13 @@ async def process_update(self, update):
             if handler.check_update(update):
                 # Here we `await`, i.e. we only continue after the callback is done!
                 await handler.handle_update(update)
-                continue  # at most one handler per group handles the update
+                break  # at most one handler per group handles the update
 ```
 
 ## Using concurrency
 
 We want to reply to both *User A* and *User B* as fast as possible and while sending the reply to user *User A* we'd like to already get started on handling *Update B*.
-PTB comes with three built-in mechanism that can help with that.
+PTB comes with three built-in mechanisms that can help with that.
 
 ### `Handler.block`
 
@@ -77,7 +77,7 @@ async def process_update(self, update):
             if handler.check_update(update):
                 # Here we *don't* `await`, such that the loop immediately continues
                 asyncio.create_task(handler.handle_update(update))
-                continue  # at most one handler per group handles the update
+                break  # at most one handler per group handles the update
 ```
 
 This already helps for many use cases.

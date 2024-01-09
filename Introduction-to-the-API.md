@@ -1,4 +1,4 @@
-# ⚠️ This is the v20.x version of the wiki. For the v13.x version, please head [here](https://github.com/python-telegram-bot/v13.x-wiki/wiki).
+> ⚠️ This is the v20.x version of the wiki. For the v13.x version, please [head to the v13.x wiki](https://github.com/python-telegram-bot/v13.x-wiki/wiki).
 
 ## Pure Telegram Bot API
 
@@ -39,32 +39,34 @@ Here we simply call the API method [getMe](https://core.telegram.org/bots/api#ge
 The `async with bot:` ensures that PTB can properly acquire and release resources.
 If you run the file you should get an output along the lines
 
-```pycon
->>> python main.py
-User(first_name='Toledo's Palace Bot', is_bot=True, username='ToledosPalaceBot', ...)
+```sh
+$ python main.py
+User(first_name="Toledo's Palace Bot", is_bot=True, username="ToledosPalaceBot", ...)
 ```
 
 So far so good.
 Now we can try and actually do something - let's send a message.
 
-However, bots can't initiate conversations with users.
-A user must either add them to a group or send them a message first.
-People can use ``telegram.me/<bot_username>`` links or username search to find your bot.
+> [!IMPORTANT]
+> Bots can't initiate conversations with users.
+> A user must either add them to a group or send them a message first.
+> People can use ``t.me/<bot_username>`` links or username search to find your bot.
 
-Because of above note, we'll have to first send a message to the bot.
-If we've done that, we can fetch the update by refactoring the `main` function in our file with
+Because of that restriction, we'll have to first send a message to the bot.
+After we've done that, we can fetch the update by refactoring the `main` function in our file with
 
 ```python
 async def main():
     bot = telegram.Bot("TOKEN")
     async with bot:
-        print((await bot.get_updates())[0])
+        updates = (await bot.get_updates())[0]
+        print(updates)
 ```
 
 The output should now look something like this (we abbreviated the output a bit):
 
-```pycon
->>> python main.py
+```sh
+$ python main.py
 Update(message=Message(chat=Chat(first_name='John', id=1234567890, last_name='Doe', ...), from_user=User(first_name='John', id=1234567890, last_name='Doe', ...), text='Hi!', ...), update_id=219017225)
 ```
 

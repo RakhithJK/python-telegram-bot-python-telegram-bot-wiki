@@ -16,14 +16,14 @@ This means two things for you:
 
 ## Memory Usage
 
-PTB stores the callback data objects in memory. Additionally, to that, it stores a mapping of `CallbackQuery.id` to the corresponding UUID. By default, both storages contain a maximum number of 1024 items. You can change the size by passing an integer to the `arbitrary_callback_data` argument of `Updater/ext.Bot`.
+PTB stores the callback data objects in memory. Additionally, to that, it stores a mapping of `CallbackQuery.id` to the corresponding UUID. By default, both storages contain a maximum number of 1024 items. You can change the size by passing an integer to the `arbitrary_callback_data` argument of `ApplicationBuilder`/`ExtBot`.
 
 As PTB can't know when the stored data is no longer needed, it uses an LRU (Least Recently Used) cache. This means that when the cache is full, it will drop the keyboard that has been not used for the longest time. However, if you want to keep memory usage low, you have 
 additional options to drop data:
 
 * on receiving a `CallbackQuery`, you can call `context.drop_callback_data(callback_query)`. This will delete the data associated with the keyboard attached to the message that originated the `CallbackQuery`. Calling `context.drop_callback_data` is safe in any case where you change the keyboard, i.e. `callback_query.edit_message_text/reply_markup/…`
   **Note:** If the user clicks a button more than one time fast enough, but you call `context.drop_callback_data` for the first resulting `CallbackQuery`, the second one will have `InvalidCallbackData` as `callback_data`. However, this is usually not a problem, because one only wants one button click anyway.
-* To drop more data from memory, you can call `bot.callback_data.clear_callback_queries()` or `bot.callback_data.clear_callback_data()`, which will drop the mapping of `CallbackQuery` ids to the associated UUID and the mapping of UUIDs to data, respectively. `clear_callback_data` also accepts a `time_cutoff`, allowing you to delete only entries older than a specified time.
+* To drop more data from memory, you can call `bot.callback_data_cache.clear_callback_queries()` or `bot.callback_data_cache.clear_callback_data()`, which will drop the mapping of `CallbackQuery` ids to the associated UUID and the mapping of UUIDs to data, respectively. `clear_callback_data` also accepts a `time_cutoff`, allowing you to delete only entries older than a specified time.
 
 ## Security of InlineKeyboardButtons
 

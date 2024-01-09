@@ -1,6 +1,6 @@
 In V12.0b1 we added a persistence mechanism to `telegram.ext`. This wiki page is there to help you understand and set up persistence for your bots.
 
-- [What can become persistent?](#what-can-become-persistent-)
+- [What can become persistent?](#what-can-become-persistent)
 - [Included persistence classes](#included-persistence-classes)
 - [3rd party persistence classes](#3rd-party-persistence-classes)
 - [What do I need to change?](#what-do-i-need-to-change)
@@ -17,7 +17,7 @@ In V12.0b1 we added a persistence mechanism to `telegram.ext`. This wiki page is
 
 * `Job`'s and the `job_queue` is not supported.
 However, the current `JobQueue` backend [APScheduler](https://apscheduler.readthedocs.io/) has its own persistence logic that you can leverage.
-See e.g. [`ptbcontrib/ptb_sqlalchemy_jobstore`](https://github.com/python-telegram-bot/ptbcontrib/tree/main/ptbcontrib/ptb_sqlalchemy_jobstore)
+See e.g. [`ptbcontrib/ptb_jobstores`](https://github.com/python-telegram-bot/ptbcontrib/tree/main/ptbcontrib/ptb_jobstores)
 * For a special note about `Bot` instances, see [below](#storing-bots)
 
 ## Included persistence classes
@@ -54,9 +54,10 @@ Adding these arguments and adding the conversation handler to a persistence-awar
 When starting the `Application` with `Application.start()` or `Application.run_{polling, webhook}`, it will loads the data from the persistence on startup and automatically update the persistence in regular intervals.
 You can customize the interval via the [`update_interval`](https://python-telegram-bot.readthedocs.io/telegram.ext.basepersistence.html#telegram.ext.BasePersistence.params.update_interval) argument of `Base/Pickle/Dict/…Persistence`.
 
-### ⚠️ Note
+You can also selectively store only some of `{bot,chat,user,callback}_data` by passing a `PersistenceInput` to the `store_data` argument your persistence class.
 
-Since the persisted data is loaded on start-up, any data written to `Application.{bot, chat, user_data}` *before* startup will hence be overridden! To manually write data into these *after* the persisted data has been loaded, please use [`Application.post_init`](https://docs.python-telegram-bot.org/telegram.ext.applicationbuilder.html?highlight=ApplicationBuilder#telegram.ext.ApplicationBuilder.post_init).
+> [!NOTE]
+> Since the persisted data is loaded on start-up, any data written to `Application.{bot, chat, user_data}` *before* startup will hence be overridden! To manually write data into these *after* the persisted data has been loaded, please use [`Application.post_init`](https://docs.python-telegram-bot.org/telegram.ext.applicationbuilder.html?highlight=ApplicationBuilder#telegram.ext.ApplicationBuilder.post_init).
 
 ## Refreshing at runtime
 
@@ -84,5 +85,5 @@ Indeed, this is basically what the built-in `PicklePersistence` does.
 For more technical details, please refer to the documentation of [`BasePersistence`](https://python-telegram-bot.readthedocs.io/telegram.ext.basepersistence.html#telegram-ext-basepersistence), 
 [`PicklePersistence`](https://python-telegram-bot.readthedocs.io/telegram.ext.picklepersistence.html#telegram-ext-picklepersistence)
 
-### ⚠️ Note
-Although `PicklePersistence` does the 'placeholder' process described above, all the data are deep copied with `copy.deepcopy` before being handed over to persistence. This means that you should either store only copyable data (e.g. no `telegram.Bot` objects) and/or ensure that your stored data defines appropriate custom deepcopy behavior. This technical detail is described in a note [here](https://docs.python-telegram-bot.org/telegram.ext.application.html#telegram.ext.Application.update_persistence)
+> [!NOTE]
+> Although `PicklePersistence` does the 'placeholder' process described above, all the data are deep copied with `copy.deepcopy` before being handed over to persistence. This means that you should either store only copyable data (e.g. no `telegram.Bot` objects) and/or ensure that your stored data defines appropriate custom deepcopy behavior. This technical detail is described in a note [here](https://docs.python-telegram-bot.org/telegram.ext.application.html#telegram.ext.Application.update_persistence)

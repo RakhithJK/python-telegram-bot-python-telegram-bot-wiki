@@ -52,6 +52,7 @@ Turning off the privacy mode has no effect for groups the bot is already in (bec
 From the official [Telegram Bot FAQ](https://core.telegram.org/bots/faq#why-doesn-39t-my-bot-see-messages-from-other-bots):
 > Bots talking to each other could potentially get stuck in unwelcome loops. To avoid this, we decided that bots will not be able to see messages from other bots regardless of mode.
 >
+Although, It is still possible to see a bot message if bot is replied to, with `reply_to_message` but you can't do any actions(forward etc) except delete on this message.
 
 ### Can my bot delete messages from the user in a private chat?
 
@@ -83,7 +84,10 @@ Anything *not* listed there can not be done with bots. Here is a short list of f
 * Getting a users `user_id` via their `@username` (only userbots can do that - you may be interested in [`ptbcontrib/username_to_chat_api`](https://github.com/python-telegram-bot/ptbcontrib/tree/main/ptbcontrib/username_to_chat_api))
 
 In some cases, using a userbot can help overcome restrictions of the Bot API. Please have a look at this [article](http://telegra.ph/How-a-Userbot-superacharges-your-Telegram-Bot-07-09) about userbots.
-Note that userbots are not what python-telegram-bot is for.
+Note that userbots are *not* what python-telegram-bot is for.
+
+Please also note that some methods marked in the Telegram API (aka MTProto) are marked as "usable for bots". This does *not* necessarily mean that they can be used directly via the Bot API.
+See [this GitHub thread](https://github.com/tdlib/telegram-bot-api/issues/1#issuecomment-721873231) and [this discussion](https://github.com/tdlib/telegram-bot-api/issues/62) for more info on that.
 
 ### I'm using `ConversationHandler` and want one handler to be run multiple times. How do I do that?
 
@@ -103,11 +107,12 @@ If your third-party service requires some other setup for fetching updates, that
 
 ### Why am I getting `ImportError: cannot import name 'XY' from 'telegram'`?
 
-There are two common reasons for this kind of exception:
+There are three common reasons for this kind of exception:
 
 1. You installed `pip install telegram` instead of `pip install python-telegram-bot`. Run `pip uninstall telegram` to uninstall the [telegram library](https://pypi.org/project/telegram/) and then run `pip install python-telegram-bot` again.
 2. You have a file named `telegram.py` or a directory/module named `telegram` in your working directory. This leads to namespace issues.
 Rename them to something else.
+3. You have misconfigured your python path/environment. Please check that the location listed in `pip show python-telegram-bot` is in your [`PYTHONPATH`](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH), or your [`sys.path`](https://docs.python.org/3/library/sys.html#sys.path). If not, then you may for e.g. append it to `PYTHONPATH` with `export PYTHONPATH=$PYTHONPATH:/path/to/python-telegram-bot`, or append it to `sys.path` with `sys.path.append('/path/to/python-telegram-bot')`.
 
 ### What do the `per_*` settings in `ConversationHandler` do?
 
