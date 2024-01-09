@@ -188,7 +188,9 @@ Finally, note that Telegram imposes some limits that restrict you to send ~30 Me
 
 The basic problem behind this question is simple. For the end user, it looks like one message, consisting of several medias, are sent to the receiver. For the bot API/bot developer, this is not the case however: Every media is send as one unique message, only linked via the unique [Message.media_group_id](https://python-telegram-bot.readthedocs.io/telegram.message.html#telegram.Message.media_group_id) attribute. So you need some way of determining when to start and to end collecting the media messages.
 
-This basic problem has two basic approaches for handling it, without requiring a more elaborate setup involving databases.
+This basic problem has two basic approaches for handling it, without requiring a more elaborate setup involving databases. We details them below.
+
+The good news is: Once you have all the media messages, forwarding them in a batch can simply done with [`Bot.forward_messages`](https://docs.python-telegram-bot.org/en/stable/telegram.bot.html#telegram.Bot.forward_messages).
 
 ### Timer based approach
 
