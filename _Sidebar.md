@@ -27,6 +27,7 @@
 6. [Arbitrary `callback_data`](Arbitrary-callback_data)
 7. [[Avoiding flood limits|Avoiding-flood-limits]]
 8. [[Webhooks|Webhooks]]
+9. [[Bot API Forward Compatiblity|Bot-API-Forward-Compatibility]]
 
 ## Code Resources
 
