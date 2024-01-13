@@ -12,7 +12,7 @@ Bots built using the `telegram.ext.Application` class (>=v20):
 | [ForwardsCoverBot](https://github.com/91DarioDev/ForwardsCoverBot) | Echoes any message and any kind of media to anonymize the forward. | 20.0 | 2023 | [Link](https://t.me/forwardscoverbot) |
 | [GuardianVPN](https://github.com/mearashadowfax/GuardianVPN) | A Telegram bot that simplifies VPN configuration by providing users with configuration files on-demand | 20.1 | 2023 | [@GuardianVPNBot](https://t.me/GuardianVPNBot) |
 | [Instagram Assistant](https://github.com/rzashakeri/Instagram-Assistant) | Instagram Assistant on Telegram with download, upload and Lottery and Insights 💡 | 20.1 | 2023 | [Link](https://t.me/InstagramAssistantRobot) |
-| [Rules Bot](https://github.com/python-telegram-bot/rules-bot) | A bot built by the PTB team that helps manage the PTB channels on Telegram | 20.2 | 2023 | [Link](https://t.me/roolsbot) |
+| [Rules Bot](https://github.com/python-telegram-bot/rules-bot) | A bot built by the PTB team that helps manage the PTB groups on Telegram | 20.2 | 2023 | [Link](https://t.me/roolsbot) |
 | [Shorts To Telegram](https://github.com/fauzaanu/Shorts_To_Telegram) | On receiving a YouTube Shorts Link this bot will send you back a telegram video | >=20.0a0 | 2022 | [Link](https://t.me/ShortsInTGBot) |
 | [Tiktok To Telegram](https://github.com/fauzaanu/Tiktok_To_Telegram) | On receiving a tiktok link this bot will send you back a watermark removed video back | 20.0a4 | 2022 | [Link](https://t.me/TokInTgBot) |
 | [Torrent Telegram Bot](https://github.com/fauzaanu/torrent_telegram_bot) | A bot that generates direct links from torrent magnet links, along with searching torrents from a search query | Unknown | 2022 | - |
