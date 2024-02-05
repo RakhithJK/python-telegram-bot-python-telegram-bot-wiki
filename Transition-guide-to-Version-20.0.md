@@ -170,7 +170,7 @@ We hence decided to make `TelegramObject` and all of its subclasses immutable, m
 * All API methods of the `telegram.Bot` class that return a list/an array of items now return an immutable `tuple`. For example, the return value of `get_chat_administrators` is now a `tuple` instead of a `list`
 
 If these changes have an effect on your current code, we highly recommend to overthink your code design.
-Keep in mind that for storing data in memory, PTB provides a handy [built-in solution](../Storing-bot%2C-user-and-chat-related-data).
+Keep in mind that for storing data in memory, PTB provides a handy [built-in solution](Storing-bot,-user-and-chat-related-data).
 
 These changes were introduced in v20.0b0.
 
