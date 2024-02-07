@@ -108,7 +108,7 @@ Give it a try! Start a chat with your bot and issue the `/start` command - if al
 
 But our Bot can now only answer to the `/start` command.
 Let's add another handler that listens for regular messages. Use the `MessageHandler`, another `Handler` subclass, to echo all text messages.
-First stop your bot by hitting `CTRL+C`.
+First, stop your bot by hitting `CTRL+C`.
 Now define a new function and add a corresponding handler:
 
 ```python
