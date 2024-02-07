@@ -52,19 +52,7 @@ BotCommand("command", "description", api_kwargs={"emoji": "💥"})
 and PTB will pass the data along to Telegram.
 
 > [!Important]
-> The argument `api_kwargs` will always accept a dictionary with string keys. Note that the type of the values should in general be either 
->
-> * JSON serializable (e.g. `str`, `int`, `list`/`tuple` or `dict` is `str` keys) or
-> * a object of type `TelegramObject` (or a subclass) or
-> * a `datetime.datetime` object or
-> * an [`InputFile`](https://docs.python-telegram-bot.org/en/stable/telegram.inputfile.html) object
-> 
-> Otherwise, PTB will not be able to correctly pass `api_kwargs` along to Telegram, or Telegram by not be able to parse the input.
-> Moreover, convenience functionality provided by PTB for other arguments will not be available for the data passed via `api_kwargs`.
-> In particular:
-> 
-> * insertion of [`Defaults`](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Adding-defaults-to-your-bot) will not work
-> * convenience conversion of file handles or file paths into `InputFile` objects will not work
+> The argument `api_kwargs` of `TelegramObject` has the same limitations as the argument `api_kwargs` of `Bot.do_api_request` - see [below](#new-methods).
 
 # Using Bot Methods
 
@@ -83,11 +71,29 @@ await bot.send_message(chat_id=123, text="Hello!", api_kwargs={"delete_after": 4
 and PTB will pass the data along to Telegram.
 
 > [!Important]
-> The argument `api_kwargs` of bot methods has the same limitations as the argument `api_kwargs` of `TelegramObject` - see [above](#sending-objects).
+> The argument `api_kwargs` of bot methods has the same limitations as the argument `api_kwargs` of `Bot.do_api_request` - see [below](#new-methods).
 
 ## New Methods
 
 Sometimes, Telegram adds entirely new methods to the API that you can use to trigger novel functionality.
 If Telegram adds such a new method, the corresponding method of PTBs class `telegram.Bot` will be missing.
-Unfortunately, PTB does not yet have way to make the new method available to you via in a simple way. This feature is being tracked in #4053.
-However, you can of course manually do a HTTP request to the Bot API for the few API calls that are not yet wrapped by PTB.
+However, PTB provides the method `Bot.do_api_request` that allows you to make any API call to Telegram.
+
+For example, imagine that Telegram adds a new method called `get_message` allowing your bot to fetch information about a specific method. Then calling that method via `await bot.get_message(chat_id=123, message_id=456)` is possible only after PTB was updated. However, you can already do
+
+```python
+await bot.do_api_request(endpoint="get_message", api_kwargs={"message_id": 456, "chat_id": 123}, return_type=Message)
+```
+
+and PTB will call the corresponding Bot API method with the given parameters and return the result as a `Message` object.
+
+> [!Important]
+> The argument `api_kwargs` will always accept a dictionary with string keys. Note that the type of the values should in general be either 
+>
+> * JSON serializable (e.g. `str`, `int`, `list`/`tuple` or `dict` is `str` keys) or
+> * a object of type `TelegramObject` (or a subclass) or
+> * a `datetime.datetime` object or
+> * an [`InputFile`](https://docs.python-telegram-bot.org/en/stable/telegram.inputfile.html) object
+> 
+> Otherwise, PTB will not be able to correctly pass `api_kwargs` along to Telegram, or Telegram by not be able to parse the input.
+> For more details on the limitations of `api_kwargs`, see [here](https://docs.python-telegram-bot.org/en/stable/telegram.bot.html#telegram.Bot.do_api_request).
