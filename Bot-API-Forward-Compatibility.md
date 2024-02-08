@@ -82,7 +82,11 @@ However, PTB provides the method `Bot.do_api_request` that allows you to make an
 For example, imagine that Telegram adds a new method called `get_message` allowing your bot to fetch information about a specific method. Then calling that method via `await bot.get_message(chat_id=123, message_id=456)` is possible only after PTB was updated. However, you can already do
 
 ```python
-await bot.do_api_request(endpoint="get_message", api_kwargs={"message_id": 456, "chat_id": 123}, return_type=Message)
+await bot.do_api_request(
+    endpoint="get_message",
+    api_kwargs={"message_id": 456, "chat_id": 123},
+    return_type=Message
+)
 ```
 
 and PTB will call the corresponding Bot API method with the given parameters and return the result as a `Message` object.
