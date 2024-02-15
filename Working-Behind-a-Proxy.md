@@ -35,7 +35,7 @@ from telegram.ext import ApplicationBuilder
 
 proxy_url = "socks5://user:pass@host:port"
 
-app = ApplicationBuilder().token("TOKEN").proxy(proxy_url).build()
+app = ApplicationBuilder().token("TOKEN").proxy(proxy_url).get_updates_proxy(proxy_url).build()
 ```
 
 If you're more of an advanced user and would like to customize your proxy setup even further, check out the [docs of httpx](https://www.python-httpx.org/advanced/#http-proxying) for more info.
