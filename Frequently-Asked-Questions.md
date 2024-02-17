@@ -21,6 +21,7 @@
 - [How can I print a table in a Telegram message? Is it a lost cause?](#how-can-i-print-a-table-in-a-telegram-message-is-it-a-lost-cause)
 - [Can an `InlineKeyboardButton` have both a URL and `callback-data`?](#can-an-inlinekeyboardbutton-have-both-a-url-and-callback-data)
 - [Why am I suddenly getting so many log entries from `httpx`?](#why-am-i-suddenly-getting-so-many-log-entries-from-httpx)
+- [How can my bot use premium features?](#how-can-my-bot-use-premium-features)
 
 ### What messages can my Bot see?
 
@@ -202,3 +203,9 @@ import logging
 
 logging.getLogger("httpx").setLevel(logging.WARNING)
 ```
+
+### How can my bot use premium features?
+
+Currently, Bot API allows only limited premium features to be used by bots, particularly sending custom emojis.
+Custom emoji entities can only be used by bots that purchased additional usernames on [Fragment](https://fragment.com/) in any chat.
+Additionally, bots can send custom emojis in specific groups without buying additional usernames if that group has sufficient amount of boosts to allow non premium members to send custom emojis from the groups emoji pack. See [formatting options](https://core.telegram.org/bots/api#formatting-options) to know how to send custom emojis if your bot fulfills the necessary conditions.
