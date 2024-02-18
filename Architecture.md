@@ -7,12 +7,12 @@ Because all of that can be a bit overwhelming, the below diagram gives you an ov
 ```mermaid
 flowchart TD;
     AppBuilder("
-        <code>ext.ApplicationBuilder</code>
+        ext.ApplicationBuilder
         builder pattern for
-        <code>ext.Application</code>
+        ext.Application
     ");
     App("
-        <code>ext.Application</code>
+        ext.Application
         
         • entry point for the whole application</li>
         • provides convenience methods for running the whole app via run_polling/webhook()</li>
@@ -20,75 +20,75 @@ flowchart TD;
         • administers user/chat/bot_data</li>
     ");
     BaseHandler("
-        <code>ext.BaseHandler</code>
+        ext.BaseHandler
         specifies if and how
         it handles updates
     ");
     BaseRateLimiter("
-        <code>ext.BaseRateLimiter</code>
+        ext.BaseRateLimiter
         interface for rate limiting
         API requests
     ");
     BaseRequest("
-        <code>request.BaseRequest</code>
+        request.BaseRequest
         interface for handling the
         networking backend
     ");
     BasePersistence("
-        <code>ext.BasePersistence</code>
+        ext.BasePersistence
         interface for persisting
-        data from <code>ext.Application</code>
+        data from ext.Application
         across restarts
     ");
     BaseUpdateProcessor("
-        <code>ext.BaseUpdateProcessor</code>
+        ext.BaseUpdateProcessor
         interface for processing
         updates concurrently
     ");
     Bot("
-        <code>(ext.Ext)Bot</code>
+        (ext.Ext)Bot
         Telegram Bot API client
         used to make requests
         to the API
     ");
     CallbackContext("
-        <code>ext.CallbackContext</code>
+        ext.CallbackContext
         Convenience class for unified
         access to different objects within
         handler/job/error callbacks
     ");
     CallbackDataCache("
-        <code>ext.CallbackDataCache</code>
+        ext.CallbackDataCache
         in-memory LRU-cache for
         arbitrary callback_data
     ");
     ContextTypes("
-        <code>ext.ContextTypes</code>
+        ext.ContextTypes
         specifies types of
         the context argument
     ");
     Defaults("
-        <code>ext.Defaults</code>
+        ext.Defaults
         gathers default values for frequently
-        used parameters of <code>(ext.Ext)Bot</code>,
-        <code>Ext.JobQueue</code> and <code>ext.BaseHandler</code>
+        used parameters of (ext.Ext)Bot,
+        Ext.JobQueue and ext.BaseHandler
     ");
     JobQueue("
-        <code>ext.JobQueue</code>
+        ext.JobQueue
         schedules tasks to run
         at specific times
     ");
     Updater("
-        <code>ext.Updater</code>
+        ext.Updater
         fetches updates from Telegram
         and puts them into the update_queue
     ");
     
     AppBuilder -- builds --> App;
-    App -- accesses to build <code>context</code> --> ContextTypes;
+    App -- accesses to build context --> ContextTypes;
     App -- "provides arguments for<br>handler callbacks, processes exceptions<br>raised in handler callbacks" --> BaseHandler;
     App -- processes exceptions<br>raised in jobs --> JobQueue;
-    App -- fetches data<br>and passes it to<br><code>ext.BasePersistence</code> --> CallbackDataCache;
+    App -- fetches data<br>and passes it to<br>ext.BasePersistence --> CallbackDataCache;
     App -- fetches updates from<br>the update_queue --> Updater;
     App -- updates in<br>regular intervals --> BasePersistence;
     App -- gets default values<br>for parameters --> Defaults;
@@ -99,9 +99,9 @@ flowchart TD;
     BaseRateLimiter -- rate limits requests<br>to the API --> BaseRequest;
     Bot -- dispatches requests<br>to the API --> BaseRateLimiter;
     Bot -- gets default values<br>for parameters --> Defaults;
-    Bot -- stores arbitrary<br><code>callback_data</code> --> CallbackDataCache;
-    JobQueue -- accesses to<br>build <code>context</code> --> ContextTypes;
-    Updater -- calls <code>get_updates</code><br>& <code>set/delete_webhook</code> --> Bot;
+    Bot -- stores arbitrary<br>callback_data --> CallbackDataCache;
+    JobQueue -- accesses to<br>build context --> ContextTypes;
+    Updater -- calls get_updates<br>& set/delete_webhook --> Bot;
     
 ```
 
