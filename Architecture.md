@@ -24,11 +24,7 @@ flowchart TD;
         specifies if and how
         it handles updates
     ");
-    BaseRateLimiter("
-        ext.BaseRateLimiter
-        interface for rate limiting
-        API requests
-    ");
+
     BaseRequest("
         request.BaseRequest
         interface for handling the
@@ -57,6 +53,17 @@ flowchart TD;
         access to different objects within
         handler/job/error callbacks
     ");
+        BaseRateLimiter("
+        ext.BaseRateLimiter
+        interface for rate limiting
+        API requests
+    ");
+        Defaults("
+        ext.Defaults
+        gathers default values for frequently
+        used parameters of (ext.Ext)Bot,
+        Ext.JobQueue and ext.BaseHandler
+    ");
     CallbackDataCache("
         ext.CallbackDataCache
         in-memory LRU-cache for
@@ -67,12 +74,7 @@ flowchart TD;
         specifies types of
         the context argument
     ");
-    Defaults("
-        ext.Defaults
-        gathers default values for frequently
-        used parameters of (ext.Ext)Bot,
-        Ext.JobQueue and ext.BaseHandler
-    ");
+
     JobQueue("
         ext.JobQueue
         schedules tasks to run
@@ -98,11 +100,11 @@ flowchart TD;
     BasePersistence -- holds a reference --> Bot;
     BaseRateLimiter -- rate limits requests<br>to the API --> BaseRequest;
     Bot -- dispatches requests<br>to the API --> BaseRateLimiter;
+        Bot -- stores arbitrary<br>callback_data --> CallbackDataCache;
     Bot -- gets default values<br>for parameters --> Defaults;
-    Bot -- stores arbitrary<br>callback_data --> CallbackDataCache;
     JobQueue -- accesses to<br>build context --> ContextTypes;
     Updater -- calls get_updates<br>& set/delete_webhook --> Bot;
-    
+   
 ```
 
 ---
