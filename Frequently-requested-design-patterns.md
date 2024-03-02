@@ -194,9 +194,7 @@ The good news is: Once you have all the media messages, forwarding them in a bat
 
 ### Timer based approach
 
-⚠️ This code was written for the v13.x version. Refer to the [transition guide](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Transition-guide-to-Version-20.0) before using it.
-
-[Real life code example.](https://github.com/Poolitzer/channelforwarder/blob/589104b8a808199ba46d620736bd8bea1dc187d9/main.py#L19-L46)
+[Real life code example.](https://github.com/Poolitzer/channelforwarder/blob/43086851e5a2274128cf8d82146b348cad78e647/main.py#L47C1-L91C14)
 
 This approach has the upside of looking seamless to the user. The downside is that there is a (low) possibility that one part of the media group is missed.
 
