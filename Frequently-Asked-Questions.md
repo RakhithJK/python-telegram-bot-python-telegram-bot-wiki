@@ -21,6 +21,7 @@
 - [How can I print a table in a Telegram message? Is it a lost cause?](#how-can-i-print-a-table-in-a-telegram-message-is-it-a-lost-cause)
 - [Can an `InlineKeyboardButton` have both a URL and `callback-data`?](#can-an-inlinekeyboardbutton-have-both-a-url-and-callback-data)
 - [Why am I suddenly getting so many log entries from `httpx`?](#why-am-i-suddenly-getting-so-many-log-entries-from-httpx)
+- [How can my bot use premium features?](#how-can-my-bot-use-premium-features)
 
 ### What messages can my Bot see?
 
@@ -186,11 +187,11 @@ If it's important to you to send a nicely formatted table, send a picture or a p
 No, exactly *one* of the optional arguments of `InlineKeyboardButton` must be set.
 The closest that you can get to having both a URL and `callback_data` in the button is:
 
-1. have a custom server (e.g. `my.tld`) where you can creaty redirec-links on the fly - something similar to bitly or all the other link shortening services
+1. have a custom server (e.g. `my.tld`) where you can create redirect-links on the fly - something similar to bitly or all the other link shortening services
 2. each time you want to have both a URL and a `callback_data`, create a new link `my.tld/some_token`
     1. Make `my.tld/some_token` redirect to the actual URL
     2. Configure your server such that it sends a notification to your bot telling it that the `my.tld/some_token` was accessed
-3. Make your bot process that information similar to how you'd process a `CallbackQuery`. See also [thes FAQ entry](#i-want-to-handle-updates-from-an-external-service-in-addition-to-the-telegram-updates-how-do-i-do-that)
+3. Make your bot process that information similar to how you'd process a `CallbackQuery`. See also [this FAQ entry](#i-want-to-handle-updates-from-an-external-service-in-addition-to-the-telegram-updates-how-do-i-do-that)
 
 ### Why am I suddenly getting so many log entries from `httpx`?
 
@@ -202,3 +203,9 @@ import logging
 
 logging.getLogger("httpx").setLevel(logging.WARNING)
 ```
+
+### How can my bot use premium features?
+
+Currently, Bot API allows only limited premium features to be used by bots, particularly sending custom emojis.
+Custom emoji entities can only be used by bots that purchased additional usernames on [Fragment](https://fragment.com/) in any chat.
+Additionally, bots can send custom emojis in specific groups without buying additional usernames if that group has sufficient amount of boosts to allow non premium members to send custom emojis from the groups emoji pack. See [formatting options](https://core.telegram.org/bots/api#formatting-options) to know how to send custom emojis if your bot fulfills the necessary conditions.
