@@ -83,7 +83,7 @@ media_1 = InputMediaDocument(media=file_id, ...)
 ```
 
 > [!CAUTION]
-> For the `InputMedia*` classes, passing a file path only works if your bot is running in [local mode](docs.python-telegram-bot.org/telegram.bot.html#telegram.Bot.params.local_mode).
+> For the `InputMedia*` classes, passing a file path only works if your bot is running in [local mode](https://docs.python-telegram-bot.org/telegram.bot.html#telegram.Bot.params.local_mode).
 
 ### Sending files via inline mode
 
