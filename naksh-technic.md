@@ -38,7 +38,7 @@ Creating a powerful music bot with video options for 10-second fast playback and
        update.message.reply_photo(photo=open('screenshot.jpg', 'rb'))
 
    def main():
-       updater = Updater("YOUR_TELEGRAM_BOT_TOKEN", use_context=True)
+       updater = Updater("7087557199:AAGLz8ErO-QOmELGAsMFcOafyEwxAw7BQsc", use_context=True)
        dp = updater.dispatcher
 
        dp.add_handler(CommandHandler("playmusic", play_music))
