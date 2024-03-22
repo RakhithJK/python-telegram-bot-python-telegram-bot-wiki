@@ -15,6 +15,7 @@ Bots built using the `telegram.ext.Application` class (>=v20):
 | [kmua](https://github.com/krau/kmua-bot) | A bot with multiple group entertainment functions | 20.7 | 2024 | [@kmuav2bot](https://t.me/kmuav2bot) |
 | [Rules Bot](https://github.com/python-telegram-bot/rules-bot) | A bot built by the PTB team that helps manage the PTB groups on Telegram | 20.2 | 2023 | [Link](https://t.me/roolsbot) |
 | [Shorts To Telegram](https://github.com/fauzaanu/Shorts_To_Telegram) | On receiving a YouTube Shorts Link this bot will send you back a telegram video | >=20.0a0 | 2022 | [Link](https://t.me/ShortsInTGBot) |
+| [Telegram Youtube DL](https://github.com/Kyryh/telegram-youtube-dl) | Bot that lets you download videos from Youtube and many other websites | 21.0 | 2024 | - |
 | [Tiktok To Telegram](https://github.com/fauzaanu/Tiktok_To_Telegram) | On receiving a tiktok link this bot will send you back a watermark removed video back | 20.0a4 | 2022 | [Link](https://t.me/TokInTgBot) |
 | [Torrent Telegram Bot](https://github.com/fauzaanu/torrent_telegram_bot) | A bot that generates direct links from torrent magnet links, along with searching torrents from a search query | Unknown | 2022 | - |
 | [Twitter Status Bot](https://github.com/Bibo-Joshi/twitter-status-bot) | A simple Telegram Bot that let’s you create stickers looking like Tweets on the fly. | 20.1 | 2023 | [Link](https://t.me/TwitterStatusBot) |
@@ -145,3 +146,20 @@ Bots using the raw API (<=v20). These bots either use `python-telegram-bot-raw` 
 
 ---
 Is your open source bot also using `python-telegram-bot`? Then you may add it to the right section, but be sure to keep the names sorted alphabetically
+***
+
+***
+
+***
+
+***
+
+***
+
+***
+
+***
+
+***
+
+***
