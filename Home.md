@@ -1,7 +1,5 @@
 [![Logo](https://github.com/python-telegram-bot/logos/raw/master/logo-text/png/ptb-logo-text_768.png)](https://python-telegram-bot.org/)
 
-# ⚠️ This is the v20.x version of the wiki. For the v13.x version, please head [here](https://github.com/python-telegram-bot/v13.x-wiki/wiki).
-
 ## PTB Resources
 
 PTB offers different resources that help you understand and use the features of the library.

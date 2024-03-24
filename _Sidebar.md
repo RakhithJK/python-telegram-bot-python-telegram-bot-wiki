@@ -1,5 +1,3 @@
-# ⚠️ This is the v20.x version of the wiki. For the v13.x version, please head [here](https://github.com/python-telegram-bot/v13.x-wiki/wiki).
-
 ## Must read
 
 1. [[Introduction to the API|Introduction-to-the-API]]
