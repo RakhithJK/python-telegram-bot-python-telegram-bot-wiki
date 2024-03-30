@@ -82,37 +82,14 @@ In the default networking backend, [`HTTPXRequest`](https://docs.python-telegram
 
 ## Stabilizing your app
 
-Usually, when a network error occurs the exceptions will be printed to the log, and the app will recover (continue operation) after the connection has been restored. For smoother operation better suited to your use case, you may want to catch these exceptions and handle them yourself.
-For this, be prepared to catch the [raised exception](https://python-telegram-bot.readthedocs.io/telegram.error.html) and handle it according to your policy (do you want to retry? ignore? other?) or use PTBs built-in mechanism for [[exception handling|Exceptions,-Warnings-and-Logging]].
+When a network error occurs, be prepared to catch the [raised exception](https://python-telegram-bot.readthedocs.io/telegram.error.html) and handle it according to your policy (do you want to retry? ignore? other?) or use PTBs built-in mechanism for [[exception handling|Exceptions,-Warnings-and-Logging]]. Note that for (network) errors that happen as part of [`Application.run_polling`](https://docs.python-telegram-bot.org/en/stable/telegram.ext.application.html#telegram.ext.Application.run_polling)/[`Updater.start_polling`](https://docs.python-telegram-bot.org/en/stable/telegram.ext.updater.html#telegram.ext.Updater.start_polling) are processed via the [`error_callback`](https://docs.python-telegram-bot.org/en/stable/telegram.ext.updater.html#telegram.ext.Updater.start_polling.params.error_callback) parameter of `Updater.start_polling` rather than [`Application.process_error`](https://docs.python-telegram-bot.org/en/stable/telegram.ext.application.html#telegram.ext.Application.process_error). If you whish to handle also those as part of `Application.process_error`, you can e.g. use
 
-This can involve a try-catch-block around send operations, catching `telegram.error.NetworkError`.
-For catching network errors that occur during `get_updates()` (i.e.: during polling the telegram server), this can be done as shown in following example:
-
-When using the `Application.builder()` framework, you can register an `error_callback` function as a part of the call to `application.updater.start_polling()`. This will cause the network error exceptions to be fed into the error handler function that has been registered with the `add_error_handler()` call.
-```
-def error_callback(error, application):
+```python
+def error_callback(error: Exception, application: Application) -> None:
 	application.create_task(application.process_error(update=None, error=error))
-
-async def botloop() -> NoReturn:
-	application = Application.builder().token(bot_token).build()
-	application.add_handler(CommandHandler("start", start))
-	application.add_error_handler(error_handler)
-        # Application.run_polling() does not expose the error_callback parameter, so we need to
-        # manually handle the startup and shutdown (usually all done by Application.run_polling() )
-	await application.initialize()
-	await application.updater.start_polling(allowed_updates=Update.ALL_TYPES, \
-		error_callback=functools.partial(error_callback, application=application))
-	await application.start()
-	
-	while True:
-		await asyncio.sleep(1)
-	
-	# dropped from the loop -> exit. shutdown bot.
-	await application.Updater.stop()
-	await application.stop()
-	await application.shutdown()
 ```
-For more details see [Posting 3430](https://github.com/python-telegram-bot/python-telegram-bot/issues/3430) and the error handler code in [errorhandlerbot.py](https://docs.python-telegram-bot.org/en/stable/examples.errorhandlerbot.html)
+
+for that parameter. See also [this thread](https://github.com/python-telegram-bot/python-telegram-bot/issues/3430) for some discussion.
 
 ## PTB
 If you think of another way to improve stability from within ptb, please contact us (the maintainers).
